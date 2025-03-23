@@ -23,6 +23,6 @@ export default async function handler(
 
     return res.status(201).json(data);
   } catch (error) {
-    return res.status(500).json({ error: "Ошибка сервера" });
+    return res.status(500).json({ error: `Internal Server Error: ${error}` });
   }
 }

@@ -23,13 +23,13 @@ const Sidebar = () => {
         <Typography variant="h6">Меню</Typography>
       </Box>
       <List>
-        <ListItem button component="a" href="/dashboard">
+        <ListItem component="a" href="/dashboard">
           <ListItemText primary="Главная" />
         </ListItem>
-        <ListItem button component="a" href="/profile">
+        <ListItem component="a" href="/profile">
           <ListItemText primary="Профиль" />
         </ListItem>
-        <ListItem button component="a" href="/settings">
+        <ListItem component="a" href="/settings">
           <ListItemText primary="Настройки" />
         </ListItem>
       </List>

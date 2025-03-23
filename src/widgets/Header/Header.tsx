@@ -13,14 +13,16 @@ import {
   loginPagePath,
   registerPagePath,
 } from "@/shared/variables/pagePaths";
+import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 
 const Header = () => {
-  const { user, loading, logout } = useAuth();
+  const { user, logoutUser } = useAuth();
+  const { isLoading } = useLoading();
   console.log(user);
 
   return (
     <AppBar position="sticky" color="primary">
-      {loading && <CircularProgress size={24} color="inherit" />}
+      {isLoading && <CircularProgress size={24} color="inherit" />}
       <Toolbar>
         {/* Логотип */}
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -46,7 +48,7 @@ const Header = () => {
         <Box sx={{ marginLeft: 2 }}>
           {user ? (
             <>
-              <Button color="inherit" onClick={logout}>
+              <Button color="inherit" onClick={logoutUser}>
                 Выход
               </Button>
               <Button

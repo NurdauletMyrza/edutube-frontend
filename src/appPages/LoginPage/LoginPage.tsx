@@ -16,7 +16,7 @@ const LoginPage = () => {
   const { showSnackbar } = useSnackbar();
   const { push } = useRouter();
 
-  function handleCheckEmail(event) {
+  function handleCheckEmail(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
 
@@ -46,7 +46,7 @@ const LoginPage = () => {
       });
   }
 
-  function handleLogin(event) {
+  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
 
@@ -105,7 +105,7 @@ const LoginPage = () => {
             Welcome!
           </Typography>
           <Typography variant="body1">
-            You are going to login as "{email}"
+            You are going to login as &quot;{email}&quot;
           </Typography>
           <TextField
             fullWidth

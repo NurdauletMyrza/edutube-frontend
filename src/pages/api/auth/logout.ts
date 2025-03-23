@@ -41,14 +41,24 @@ export default async function handler(
           httpOnly: accessTokenCookieConfig.httpOnly,
           secure: accessTokenCookieConfig.secure,
           maxAge: 0,
-          sameSite: accessTokenCookieConfig.sameSite,
+          sameSite: accessTokenCookieConfig.sameSite as
+            | boolean
+            | "strict"
+            | "lax"
+            | "none"
+            | undefined,
           path: accessTokenCookieConfig.path,
         }),
         serialize(refreshTokenCookieName, "", {
           httpOnly: refreshTokenCookieConfig.httpOnly,
           secure: refreshTokenCookieConfig.secure,
           maxAge: 0,
-          sameSite: refreshTokenCookieConfig.sameSite,
+          sameSite: refreshTokenCookieConfig.sameSite as
+            | boolean
+            | "strict"
+            | "lax"
+            | "none"
+            | undefined,
           path: refreshTokenCookieConfig.path,
         }),
       ]);

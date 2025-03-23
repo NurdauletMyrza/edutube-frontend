@@ -1,16 +1,14 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/router";
 import { fetchApiClient } from "@/shared/utils/apiClient";
-import {
-  aboutMeServerApiUrl,
-  loginServerApiUrl,
-  logoutServerApiUrl,
-} from "@/shared/variables/serverApiUrls";
-import {
-  cabinetProfilePagePath,
-  loginPagePath,
-  mainPagePath,
-} from "@/shared/variables/pagePaths";
+import { aboutMeServerApiUrl } from "@/shared/variables/serverApiUrls";
+import { loginPagePath } from "@/shared/variables/pagePaths";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import {
@@ -18,13 +16,22 @@ import {
   deleteCurrentUser,
 } from "@/shared/utils/apiScripts";
 
+type User = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  isActivated: boolean;
+  role: "student" | "teacher" | "admin"; // Можно добавить другие роли, если есть
+} | null;
+
 // interface AuthContextType {
 //   user: any;
 //   login: (email: string, password: string) => Promise<void>;
 //   logout: () => Promise<void>;
 // }
 interface AuthContextType {
-  user: any;
+  user: User;
   reloadUser: () => Promise<void>;
   deleteUser: (password: string) => Promise<void>;
   logoutUser: () => Promise<void>;
@@ -91,7 +98,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 //     </AuthContext.Provider>
 //   );
 // }
-export function AuthProvider({ children }) {
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState(null);
   const { showSnackbar } = useSnackbar();
   const { push } = useRouter();
@@ -105,6 +117,7 @@ export function AuthProvider({ children }) {
         setUser(data);
       }
     } catch (error) {
+      console.log(error);
       showSnackbar("User details loading error", "error");
     }
   }
@@ -126,13 +139,7 @@ export function AuthProvider({ children }) {
           setUser(null);
           push(loginPagePath);
         } else {
-          showSnackbar(
-            data["error"] ??
-              data["detail"] ??
-              data["message"] ??
-              "Logout failed",
-            "error"
-          );
+          showSnackbar("Logout failed", "error");
         }
       })
       .catch((error) => {
@@ -183,5 +190,9 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 }

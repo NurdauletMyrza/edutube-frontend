@@ -1,8 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
-  createCourseApiUrl,
-  userDetailsApiUrl,
-} from "@/shared/variables/backendApiUrls";
+import { createCourseApiUrl } from "@/shared/variables/backendApiUrls";
 import { accessTokenCookieName } from "@/shared/utils/variables";
 
 export default async function handler(
@@ -46,6 +43,6 @@ export default async function handler(
     const data = await response.json();
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: `Internal Server Error: ${error}` });
   }
 }

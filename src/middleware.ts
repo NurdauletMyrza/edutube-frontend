@@ -55,12 +55,20 @@ export async function middleware(request: NextRequest) {
         console.log(accessTokenExpiresIn);
 
         const response = NextResponse.next();
-        response.headers.set("Set-Cookie", [
+
+        // need to update code
+
+        const cookies = [
           serialize(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
             secure: accessTokenCookieConfig.secure,
             maxAge: accessTokenExpiresIn,
-            sameSite: accessTokenCookieConfig.sameSite,
+            sameSite: accessTokenCookieConfig.sameSite as
+              | boolean
+              | "strict"
+              | "lax"
+              | "none"
+              | undefined,
             path: accessTokenCookieConfig.path,
             // expires: accessTokenExpiresAt,
           }),
@@ -68,11 +76,19 @@ export async function middleware(request: NextRequest) {
             httpOnly: refreshTokenCookieConfig.httpOnly,
             secure: refreshTokenCookieConfig.secure,
             maxAge: refreshTokenExpiresIn,
-            sameSite: refreshTokenCookieConfig.sameSite,
+            sameSite: refreshTokenCookieConfig.sameSite as
+              | boolean
+              | "strict"
+              | "lax"
+              | "none"
+              | undefined,
             path: refreshTokenCookieConfig.path,
             // expires: refreshTokenExpiresAt,
           }),
-        ] as string);
+        ];
+        console.log(cookies);
+
+        response.headers.set("Set-Cookie", "");
 
         return response;
       } else if (isInCabinetUrl) {

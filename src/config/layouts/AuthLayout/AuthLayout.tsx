@@ -1,8 +1,13 @@
 import { Box, Paper, Tabs, Tab } from "@mui/material";
 import { useRouter } from "next/router";
 import { loginPagePath, registerPagePath } from "@/shared/variables/pagePaths";
+import { FC, ReactNode } from "react";
 
-const AuthLayout = ({ children }) => {
+interface AuthLayoutProps {
+  children: ReactNode;
+}
+
+const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   const { pathname, push } = useRouter();
   const isRegisterOrLoginPage =
     pathname.endsWith(loginPagePath) || pathname.endsWith(registerPagePath);

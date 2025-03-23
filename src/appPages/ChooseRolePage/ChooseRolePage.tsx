@@ -1,13 +1,9 @@
-import { useRouter } from "next/router";
-import {
-  studentRole,
-  teacherRole,
-} from "../../../public/shared/utils/variables";
-import { setUserRole } from "../../../public/shared/utils/services/usersAPI";
+import { studentRole, teacherRole } from "@/shared/utils/variables";
 
 const ChooseRolePage = () => {
-  const { push } = useRouter();
-
+  function setUserRole(role: string) {
+    console.log(role);
+  }
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h1>Выберите свою роль</h1>

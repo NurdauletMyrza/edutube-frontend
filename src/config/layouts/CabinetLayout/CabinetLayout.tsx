@@ -1,7 +1,12 @@
 import Sidebar from "@/widgets/Sidebar/Sidebar";
 import { Box, Typography } from "@mui/material";
+import { FC, ReactNode } from "react";
 
-const CabinetLayout = ({ children }) => {
+interface CabinetLayoutProps {
+  children: ReactNode;
+}
+
+const CabinetLayout: FC<CabinetLayoutProps> = ({ children }) => {
   return (
     <>
       <Sidebar />

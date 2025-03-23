@@ -47,7 +47,7 @@ export const SnackbarProvider = ({ children }: { children: ReactNode }) => {
         onClose={() => setSnackbar(null)}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        {snackbar && (
+        {snackbar ? (
           <Alert
             onClose={() => setSnackbar(null)}
             severity={snackbar.severity}
@@ -55,7 +55,7 @@ export const SnackbarProvider = ({ children }: { children: ReactNode }) => {
           >
             {snackbar.message}
           </Alert>
-        )}
+        ) : undefined}
       </Snackbar>
     </SnackbarContext.Provider>
   );

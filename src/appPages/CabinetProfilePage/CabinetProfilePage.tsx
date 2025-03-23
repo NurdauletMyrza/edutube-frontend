@@ -11,20 +11,14 @@ import {
   Box,
   TextField,
 } from "@mui/material";
-import { fetchApiClient } from "@/shared/utils/apiClient";
 import { useState } from "react";
-import { useRouter } from "next/router";
-import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
-import { loginPagePath } from "@/shared/variables/pagePaths";
 
 const CabinetProfilePage = () => {
-  const { user, reloadUser, deleteUser, logoutUser } = useAuth();
-  const { isLoading, setLoading } = useLoading();
-  const { push } = useRouter();
+  const { user, deleteUser, logoutUser } = useAuth();
+  const { isLoading } = useLoading();
   const [password, setPassword] = useState<string>("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { showSnackbar } = useSnackbar();
 
   if (isLoading) {
     return <CircularProgress sx={{ display: "block", mx: "auto", mt: 5 }} />;
@@ -93,8 +87,8 @@ const CabinetProfilePage = () => {
             Do you want to delete your account?
           </Typography>
           <Typography>
-            If you want to continue action type password and push "DELETE
-            ACCOUNT" button
+            If you want to continue action type password and push &quot;DELETE
+            ACCOUNT&quot; button
           </Typography>
           <TextField
             type="password"
