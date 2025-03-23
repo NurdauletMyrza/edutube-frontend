@@ -1,0 +1,39 @@
+# Исключаем зависимости
+node_modules
+
+# Исключаем сборку Next.js
+.next
+out
+
+# Исключаем TypeScript-артефакты
+*.d.ts
+dist
+
+# Логи и временные файлы
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Игнорируем конфиги и кеши редакторов
+.idea
+.vscode
+*.swp
+*.swo
+
+# Исключаем кэш ESLint и Prettier
+.eslintcache
+.prettiercache
+
+# Исключаем файлы env и чувствительные данные
+*.env
+.env.local
+.env.development
+.env.production
+
+# Исключаем форматирование lock-файлов
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+README.md
