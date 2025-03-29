@@ -27,7 +27,6 @@ export default async function handler(
     });
 
     const data = await response.json();
-    console.log(data);
 
     if (response.ok) {
       const {
@@ -38,7 +37,6 @@ export default async function handler(
         refresh_token_expires_in: refreshTokenExpiresIn,
         // refresh_token_expires_at: refreshTokenExpiresAt,
       } = data;
-      console.log(access);
 
       // Сохраняем refresh и access в куки (HTTP-only)
       res.setHeader("Set-Cookie", [
@@ -77,6 +75,6 @@ export default async function handler(
         .json({ ...data, message: "Authentication failed" });
     }
   } catch (error) {
-    return res.status(500).json({ message: "Internal Server Error " + error });
+    return res.status(500).json({ error: `Internal Server Error: ${error}` });
   }
 }

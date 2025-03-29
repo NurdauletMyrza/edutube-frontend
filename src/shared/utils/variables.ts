@@ -1,5 +1,3 @@
-export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 export const isProduction = process.env.NODE_ENV === "production";
 
 export const accessTokenCookieName = "clientSecret";
@@ -18,6 +16,10 @@ export const refreshTokenCookieConfig = {
   sameSite: "strict",
   path: "/",
 };
+
+////////////////////////////////
+
+export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // export const authenticatedStatus = "authenticated";
 // export const unauthenticatedStatus = "unauthenticated";

@@ -1,16 +1,21 @@
-import { useAuthServerApiBaseUrls } from "@/shared/variables/serverApiUrls";
+import {
+  authServerApiBaseUrl,
+  userServerApiBaseUrl,
+} from "@/shared/variables/serverApiUrls";
+
+const useAuthServerApiBaseUrls = [authServerApiBaseUrl, userServerApiBaseUrl];
 
 export async function fetchApiClient(input: RequestInfo, init?: RequestInit) {
-  let isUseAuthReq = false;
+  let isUseAuthRequest = false;
   for (const useAuthServerApiBaseUrl of useAuthServerApiBaseUrls) {
-    isUseAuthReq = input.toString().startsWith(useAuthServerApiBaseUrl);
-    if (isUseAuthReq) break;
+    isUseAuthRequest = input.toString().startsWith(useAuthServerApiBaseUrl);
+    if (isUseAuthRequest) {
+      return await fetch(input, {
+        ...init,
+        credentials: "include", // 🔹 Включаем cookies
+      });
+    }
   }
-  if (isUseAuthReq) {
-    return await fetch(input, {
-      ...init,
-      credentials: "include", // 🔹 Включаем cookies
-    });
-  }
+
   return await fetch(input, init);
 }

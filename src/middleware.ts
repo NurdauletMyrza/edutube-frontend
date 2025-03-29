@@ -5,61 +5,70 @@ import {
   refreshTokenCookieConfig,
   refreshTokenCookieName,
 } from "@/shared/utils/variables";
-import { cabinetPagesPath, loginPagePath } from "@/shared/variables/pagePaths";
-import { aboutMeServerApiUrl } from "@/shared/variables/serverApiUrls";
-import { serialize } from "cookie";
-import { refreshTokenApiUrl } from "@/shared/variables/backendApiUrls";
+import {
+  authPagesPath,
+  cabinetPagesPath,
+  homePagePath,
+  homePagesPath,
+  loginPagePath,
+  mainPagePath,
+} from "@/shared/variables/pagePaths";
+import {
+  authServerApiBaseUrl,
+  userServerApiBaseUrl,
+} from "@/shared/variables/serverApiUrls";
+import { refreshTokensApiUrl } from "@/shared/variables/backendApiUrls";
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/_next")) {
     return;
+  } else if (request.nextUrl.pathname === mainPagePath) {
+    return Response.redirect(new URL(homePagePath, request.url));
   }
 
-  // Skip unrelated pages
-  const matchers = [cabinetPagesPath, aboutMeServerApiUrl];
+  const matchers = [
+    authServerApiBaseUrl,
+    userServerApiBaseUrl,
+    cabinetPagesPath,
+    authPagesPath,
+    homePagesPath,
+  ];
   if (
     matchers.every((matcher) => !request.nextUrl.pathname.startsWith(matcher))
-  )
+  ) {
     return;
-
-  const accessToken = request.cookies.get(accessTokenCookieName)?.value;
-  const refreshToken = request.cookies.get(refreshTokenCookieName)?.value;
-
-  const isInCabinetUrl = request.nextUrl.pathname.startsWith(cabinetPagesPath);
-
-  if (!accessToken && !refreshToken && isInCabinetUrl) {
-    return NextResponse.redirect(new URL(loginPagePath, request.url));
   }
 
-  // Проверяем, истек ли accessToken (добавь свою логику проверки)
-  const isAccessTokenExpired = !accessToken; // Здесь можно декодировать токен и проверить exp
+  const hasRefreshToken = request.cookies.has(refreshTokenCookieName);
 
-  if (isAccessTokenExpired && refreshToken) {
-    try {
-      const refreshResponse = await fetch(refreshTokenApiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh: refreshToken }),
-      });
+  const response = NextResponse.next();
 
-      if (refreshResponse.ok) {
-        const {
-          access,
-          access_token_expires_in: accessTokenExpiresIn,
-          // access_token_expires_at: accessTokenExpiresAt,
-          refresh,
-          refresh_token_expires_in: refreshTokenExpiresIn,
-          // refresh_token_expires_at: refreshTokenExpiresAt,
-        } = await refreshResponse.json();
+  if (hasRefreshToken) {
+    const hasAccessToken = request.cookies.has(accessTokenCookieName);
 
-        console.log(accessTokenExpiresIn);
+    if (hasAccessToken) {
+      return response;
+    } else {
+      try {
+        const refreshToken = request.cookies.get(refreshTokenCookieName)?.value;
 
-        const response = NextResponse.next();
+        const refreshTokensResponse = await fetch(refreshTokensApiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ refresh: refreshToken }),
+        });
 
-        // need to update code
+        if (refreshTokensResponse.ok) {
+          const {
+            access,
+            access_token_expires_in: accessTokenExpiresIn,
+            // access_token_expires_at: accessTokenExpiresAt,
+            refresh,
+            refresh_token_expires_in: refreshTokenExpiresIn,
+            // refresh_token_expires_at: refreshTokenExpiresAt,
+          } = await refreshTokensResponse.json();
 
-        const cookies = [
-          serialize(accessTokenCookieName, access, {
+          response.cookies.set(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
             secure: accessTokenCookieConfig.secure,
             maxAge: accessTokenExpiresIn,
@@ -71,8 +80,8 @@ export async function middleware(request: NextRequest) {
               | undefined,
             path: accessTokenCookieConfig.path,
             // expires: accessTokenExpiresAt,
-          }),
-          serialize(refreshTokenCookieName, refresh, {
+          });
+          response.cookies.set(refreshTokenCookieName, refresh, {
             httpOnly: refreshTokenCookieConfig.httpOnly,
             secure: refreshTokenCookieConfig.secure,
             maxAge: refreshTokenExpiresIn,
@@ -84,27 +93,39 @@ export async function middleware(request: NextRequest) {
               | undefined,
             path: refreshTokenCookieConfig.path,
             // expires: refreshTokenExpiresAt,
-          }),
-        ];
-        console.log(cookies);
+          });
 
-        response.headers.set("Set-Cookie", "");
-
-        return response;
-      } else if (isInCabinetUrl) {
-        return NextResponse.redirect(new URL(loginPagePath, request.url));
+          return response;
+        } else {
+          response.cookies.delete(refreshTokenCookieName);
+        }
+      } catch (error) {
+        console.error(`Middleware server error: ${error}`);
       }
-    } catch (error) {
-      console.error("Ошибка обновления токена middleware:", error);
-
-      if (isInCabinetUrl)
-        return NextResponse.redirect(new URL(loginPagePath, request.url));
     }
+  } else {
+    response.cookies.delete(accessTokenCookieName);
   }
 
-  return NextResponse.next();
+  if (request.nextUrl.pathname.startsWith(cabinetPagesPath)) {
+    const redirectResponse = NextResponse.redirect(
+      new URL(loginPagePath, request.url)
+    );
+    redirectResponse.cookies.set(refreshTokenCookieName, "", { maxAge: -1 });
+    redirectResponse.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
+
+    return redirectResponse;
+  }
+
+  return response;
 }
 
 // export const config = {
-//   matcher: [`/api/:path*`], // Применяем middleware для `/cabinet/*`, `/auth/*`
+//   matcher: [
+//     `${authServerApiBaseUrl}/:path*`,
+//     `${userServerApiBaseUrl}/:path*`,
+//     `${cabinetPagesPath}/:path*`,
+//     `${authPagesPath}/:path*`,
+//     `${homePagesPath}/:path*`,
+//   ], // Применяем middleware для `/cabinet/*`, `/auth/*`
 // };
