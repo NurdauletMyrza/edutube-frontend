@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/_next")) {
     return;
   } else if (request.nextUrl.pathname === mainPagePath) {
-    return Response.redirect(new URL(homePagePath, request.url));
+    return NextResponse.redirect(new URL(homePagePath, request.url));
   }
 
   const matchers = [
@@ -38,6 +38,8 @@ export async function middleware(request: NextRequest) {
   ) {
     return;
   }
+
+  console.log("Middleware is running! URL:", request.nextUrl.pathname);
 
   const hasRefreshToken = request.cookies.has(refreshTokenCookieName);
 
