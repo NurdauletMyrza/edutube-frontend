@@ -19,6 +19,8 @@ export default async function handler(
       return res.status(401).json({ error: "Unauthorized" });
     }
 
+    console.log("Check details.ts url response:", userDetailsApiUrl);
+
     // Делаем запрос на Django API `/users/authUser/details/`
     const response = await fetch(userDetailsApiUrl, {
       headers: {
