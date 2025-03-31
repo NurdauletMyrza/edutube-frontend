@@ -1,7 +1,7 @@
-export const mainPagePath = "/";
+// export const mainPagePath = "/";
 
 export const homePagesPath = "/home";
-export const homePagePath = `${homePagesPath}/`;
+// export const homePagePath = `${homePagesPath}/`;
 
 export const authPagesPath = "/auth";
 export const loginPagePath = `${authPagesPath}/login`;
