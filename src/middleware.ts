@@ -103,6 +103,11 @@ export async function middleware(request: NextRequest) {
 
           return response;
         } else {
+          const test = await refreshTokensResponse.json();
+          console.log(test.error ?? test.message ?? test.detail ?? "?");
+          console.log(test.message ?? test.detail ?? "?");
+          console.log(test.detail ?? "?");
+
           response.cookies.delete(refreshTokenCookieName);
         }
       } catch (error) {
