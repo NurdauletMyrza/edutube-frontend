@@ -27,8 +27,8 @@ export async function middleware(request: NextRequest) {
   }
 
   const matchers = [
-    authServerApiBaseUrl,
-    userServerApiBaseUrl,
+    // authServerApiBaseUrl,
+    // userServerApiBaseUrl,
     cabinetPagesPath,
     authPagesPath,
     homePagesPath,
