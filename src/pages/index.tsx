@@ -1,3 +1,3 @@
-export default function Home() {
-  return null;
-}
+import HomePage from "@/appPages/HomePage/HomePage";
+
+export default HomePage;

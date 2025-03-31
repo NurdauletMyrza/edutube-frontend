@@ -22,8 +22,6 @@ import { refreshTokensApiUrl } from "@/shared/variables/backendApiUrls";
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/_next")) {
     return;
-  } else if (request.nextUrl.pathname === mainPagePath) {
-    return NextResponse.redirect(new URL(homePagePath, request.url));
   }
 
   const matchers = [
