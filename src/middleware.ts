@@ -74,6 +74,14 @@ export async function middleware(request: NextRequest) {
             // refresh_token_expires_at: refreshTokenExpiresAt,
           } = await refreshTokensResponse.json();
 
+          console.log(accessTokenCookieName, access);
+          console.log(refreshTokenCookieName, refresh);
+
+          console.log(accessTokenCookieConfig.secure);
+
+          response.cookies.set("access", access);
+          response.cookies.set("refresh", refresh);
+
           response.cookies.set(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
             secure: accessTokenCookieConfig.secure,
