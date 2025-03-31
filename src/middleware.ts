@@ -8,10 +8,10 @@ import {
 import {
   authPagesPath,
   cabinetPagesPath,
-  homePagePath,
+  // homePagePath,
   homePagesPath,
   loginPagePath,
-  mainPagePath,
+  // mainPagePath,
 } from "@/shared/variables/pagePaths";
 // import {
 //   authServerApiBaseUrl,

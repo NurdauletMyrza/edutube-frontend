@@ -1,4 +1,4 @@
-// export const mainPagePath = "/";
+export const mainPagePath = "/";
 
 export const homePagesPath = "/home";
 // export const homePagePath = `${homePagesPath}/`;
