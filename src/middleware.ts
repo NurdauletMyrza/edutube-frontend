@@ -49,16 +49,20 @@ export async function middleware(request: NextRequest) {
     const hasAccessToken = request.cookies.has(accessTokenCookieName);
 
     if (hasAccessToken) {
+      console.log("Access, refresh tokens exist:", request.nextUrl.pathname);
       return response;
     } else {
       try {
         const refreshToken = request.cookies.get(refreshTokenCookieName)?.value;
 
+        console.log(refreshTokensApiUrl, "=>", request.nextUrl.pathname);
         const refreshTokensResponse = await fetch(refreshTokensApiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh: refreshToken }),
         });
+
+        console.log("Refresh response status:", refreshTokensResponse.ok);
 
         if (refreshTokensResponse.ok) {
           const {
@@ -110,6 +114,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith(cabinetPagesPath)) {
+    console.log("Clear cookie:", request.nextUrl.pathname);
     const redirectResponse = NextResponse.redirect(
       new URL(loginPagePath, request.url)
     );
