@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   experimental: {
-    middlewarePrefetch: "strict", // Улучшает работу Middleware
+    middlewarePrefetch: "flexible", // Улучшает работу Middleware
   },
 };
 
