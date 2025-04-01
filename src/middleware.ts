@@ -13,10 +13,10 @@ import {
   loginPagePath,
   // mainPagePath,
 } from "@/shared/variables/pagePaths";
-import {
-  authServerApiBaseUrl,
-  userServerApiBaseUrl,
-} from "@/shared/variables/serverApiUrls";
+// import {
+//   authServerApiBaseUrl,
+//   userServerApiBaseUrl,
+// } from "@/shared/variables/serverApiUrls";
 import { refreshTokensApiUrl } from "@/shared/variables/backendApiUrls";
 
 export async function middleware(request: NextRequest) {
@@ -25,8 +25,8 @@ export async function middleware(request: NextRequest) {
   }
 
   const matchers = [
-    authServerApiBaseUrl,
-    userServerApiBaseUrl,
+    // authServerApiBaseUrl,
+    // userServerApiBaseUrl,
     cabinetPagesPath,
     authPagesPath,
     homePagesPath,
