@@ -121,7 +121,10 @@ export async function middleware(request: NextRequest) {
           console.log(test.detail ?? "?");
           console.log("refresh token:", refreshToken);
 
-          response.cookies.set("blacklisted-refresh-token", refreshToken);
+          response.cookies.set(
+            "blacklisted-refresh-token",
+            refreshToken as any
+          );
 
           response.cookies.delete(refreshTokenCookieName);
         }
