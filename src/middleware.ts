@@ -121,14 +121,14 @@ export async function middleware(request: NextRequest) {
           console.log(test.detail ?? "?");
           console.log("refresh token:", refreshToken);
 
-          response.cookies.delete(refreshTokenCookieName);
+          response.cookies.set(refreshTokenCookieName, "", { maxAge: -1 });
         }
       } catch (error) {
         console.error(`Middleware server error: ${error}`);
       }
     }
   } else {
-    response.cookies.delete(accessTokenCookieName);
+    response.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
   }
 
   if (request.nextUrl.pathname.startsWith(cabinetPagesPath)) {
