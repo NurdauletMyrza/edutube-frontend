@@ -114,7 +114,8 @@ export async function middleware(request: NextRequest) {
           console.log(test.message ?? test.detail ?? "?");
           console.log(test.detail ?? "?");
 
-          response.cookies.delete(refreshTokenCookieName);
+          // response.cookies.delete(refreshTokenCookieName);
+          return response;
         }
       } catch (error) {
         console.error(`Middleware server error: ${error}`);
