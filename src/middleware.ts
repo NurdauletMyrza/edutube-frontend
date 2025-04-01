@@ -77,14 +77,17 @@ export async function middleware(request: NextRequest) {
 
           console.log(accessTokenCookieConfig.secure);
 
+          console.log(1);
           response.cookies.set(
             `access:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
             access
           );
+          console.log(2);
           response.cookies.set(
             `refresh:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
             refresh
           );
+          console.log(3);
 
           response.cookies.set(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
@@ -99,6 +102,7 @@ export async function middleware(request: NextRequest) {
             path: accessTokenCookieConfig.path,
             // expires: accessTokenExpiresAt,
           });
+          console.log(4);
           response.cookies.set(refreshTokenCookieName, refresh, {
             httpOnly: refreshTokenCookieConfig.httpOnly,
             secure: refreshTokenCookieConfig.secure,
@@ -112,6 +116,7 @@ export async function middleware(request: NextRequest) {
             path: refreshTokenCookieConfig.path,
             // expires: refreshTokenExpiresAt,
           });
+          console.log(5);
 
           return response;
         } else {
