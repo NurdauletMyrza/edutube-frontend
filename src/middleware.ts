@@ -77,8 +77,14 @@ export async function middleware(request: NextRequest) {
 
           console.log(accessTokenCookieConfig.secure);
 
-          response.cookies.set("access", access);
-          response.cookies.set("refresh", refresh);
+          response.cookies.set(
+            `access:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
+            access
+          );
+          response.cookies.set(
+            `refresh:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
+            refresh
+          );
 
           response.cookies.set(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
@@ -113,9 +119,11 @@ export async function middleware(request: NextRequest) {
           console.log(test.error ?? test.message ?? test.detail ?? "?");
           console.log(test.message ?? test.detail ?? "?");
           console.log(test.detail ?? "?");
+          console.log("refresh token:", refreshToken);
 
-          // response.cookies.delete(refreshTokenCookieName);
-          return response;
+          response.cookies.set("blacklisted-refresh-token", refreshToken);
+
+          response.cookies.delete(refreshTokenCookieName);
         }
       } catch (error) {
         console.error(`Middleware server error: ${error}`);
