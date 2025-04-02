@@ -43,6 +43,7 @@ export async function middleware(request: NextRequest) {
   const redirectResponse = NextResponse.redirect(
     new URL(request.nextUrl.pathname, request.url)
   );
+  const nextResponse = NextResponse.next();
 
   if (hasRefreshToken) {
     const hasAccessToken = request.cookies.has(accessTokenCookieName);
@@ -132,8 +133,7 @@ export async function middleware(request: NextRequest) {
           // redirectResponse.cookies.set(refreshTokenCookieName, "", {
           //   maxAge: -1,
           // });
-          redirectResponse.cookies.delete(refreshTokenCookieName);
-          return redirectResponse;
+          nextResponse.cookies.delete(refreshTokenCookieName);
         }
       } catch (error) {
         console.error(`Middleware server error: ${error}`);
@@ -141,8 +141,7 @@ export async function middleware(request: NextRequest) {
     }
   } else {
     // redirectResponse.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
-    redirectResponse.cookies.delete(accessTokenCookieName);
-    return redirectResponse;
+    nextResponse.cookies.delete(accessTokenCookieName);
   }
 
   if (request.nextUrl.pathname.startsWith(cabinetPagesPath)) {
@@ -162,7 +161,7 @@ export async function middleware(request: NextRequest) {
     return loginPageRedirectResponse;
   }
 
-  return NextResponse.next();
+  return nextResponse;
 }
 
 // export const config = {
