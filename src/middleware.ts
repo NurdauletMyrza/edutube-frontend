@@ -4,9 +4,9 @@ import {
   accessTokenCookieName,
   refreshTokenCookieConfig,
   refreshTokenCookieName,
+  specialMaxAgeReduceValue,
 } from "@/shared/utils/variables";
 import {
-  authPagesPath,
   cabinetPagesPath,
   // homePagePath,
   homePagesPath,
@@ -28,27 +28,28 @@ export async function middleware(request: NextRequest) {
     // authServerApiBaseUrl,
     // userServerApiBaseUrl,
     cabinetPagesPath,
-    authPagesPath,
+    loginPagePath,
     homePagesPath,
   ];
   if (
     matchers.every((matcher) => !request.nextUrl.pathname.startsWith(matcher))
   ) {
-    return;
+    return NextResponse.next();
   }
 
   console.log("Middleware is running! URL:", request.nextUrl.pathname);
 
   const hasRefreshToken = request.cookies.has(refreshTokenCookieName);
-
-  const response = NextResponse.next();
+  const redirectResponse = NextResponse.redirect(
+    new URL(request.nextUrl.pathname, request.url)
+  );
 
   if (hasRefreshToken) {
     const hasAccessToken = request.cookies.has(accessTokenCookieName);
 
     if (hasAccessToken) {
       console.log("Access, refresh tokens exist:", request.nextUrl.pathname);
-      return response;
+      return NextResponse.next();
     } else {
       try {
         const refreshToken = request.cookies.get(refreshTokenCookieName)?.value;
@@ -78,21 +79,23 @@ export async function middleware(request: NextRequest) {
           console.log(accessTokenCookieConfig.secure);
 
           console.log(1);
-          response.cookies.set(
+          redirectResponse.cookies.set(
             `access:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
-            access
+            access,
+            { maxAge: 2000 }
           );
           console.log(2);
-          response.cookies.set(
+          redirectResponse.cookies.set(
             `refresh:${new Date().getHours()}-${new Date().getMinutes()}-${new Date().getSeconds()}`,
-            refresh
+            refresh,
+            { maxAge: 2000 }
           );
           console.log(3);
 
-          response.cookies.set(accessTokenCookieName, access, {
+          redirectResponse.cookies.set(accessTokenCookieName, access, {
             httpOnly: accessTokenCookieConfig.httpOnly,
             secure: accessTokenCookieConfig.secure,
-            maxAge: accessTokenExpiresIn,
+            maxAge: accessTokenExpiresIn - specialMaxAgeReduceValue,
             sameSite: accessTokenCookieConfig.sameSite as
               | boolean
               | "strict"
@@ -103,10 +106,10 @@ export async function middleware(request: NextRequest) {
             // expires: accessTokenExpiresAt,
           });
           console.log(4);
-          response.cookies.set(refreshTokenCookieName, refresh, {
+          redirectResponse.cookies.set(refreshTokenCookieName, refresh, {
             httpOnly: refreshTokenCookieConfig.httpOnly,
             secure: refreshTokenCookieConfig.secure,
-            maxAge: refreshTokenExpiresIn,
+            maxAge: refreshTokenExpiresIn - specialMaxAgeReduceValue,
             sameSite: refreshTokenCookieConfig.sameSite as
               | boolean
               | "strict"
@@ -118,7 +121,7 @@ export async function middleware(request: NextRequest) {
           });
           console.log(5);
 
-          return response;
+          return redirectResponse;
         } else {
           const test = await refreshTokensResponse.json();
           console.log(test.error ?? test.message ?? test.detail ?? "?");
@@ -126,28 +129,40 @@ export async function middleware(request: NextRequest) {
           console.log(test.detail ?? "?");
           console.log("refresh token:", refreshToken);
 
-          response.cookies.set(refreshTokenCookieName, "", { maxAge: -1 });
+          // redirectResponse.cookies.set(refreshTokenCookieName, "", {
+          //   maxAge: -1,
+          // });
+          redirectResponse.cookies.delete(refreshTokenCookieName);
+          return redirectResponse;
         }
       } catch (error) {
         console.error(`Middleware server error: ${error}`);
       }
     }
   } else {
-    response.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
+    // redirectResponse.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
+    redirectResponse.cookies.delete(accessTokenCookieName);
+    return redirectResponse;
   }
 
   if (request.nextUrl.pathname.startsWith(cabinetPagesPath)) {
     console.log("Clear cookie:", request.nextUrl.pathname);
-    const redirectResponse = NextResponse.redirect(
+    const loginPageRedirectResponse = NextResponse.redirect(
       new URL(loginPagePath, request.url)
     );
-    redirectResponse.cookies.set(refreshTokenCookieName, "", { maxAge: -1 });
-    redirectResponse.cookies.set(accessTokenCookieName, "", { maxAge: -1 });
+    // loginPageRedirectResponse.cookies.set(refreshTokenCookieName, "", {
+    //   maxAge: -1,
+    // });
+    loginPageRedirectResponse.cookies.delete(refreshTokenCookieName);
+    // loginPageRedirectResponse.cookies.set(accessTokenCookieName, "", {
+    //   maxAge: -1,
+    // });
+    loginPageRedirectResponse.cookies.delete(accessTokenCookieName);
 
-    return redirectResponse;
+    return loginPageRedirectResponse;
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 // export const config = {

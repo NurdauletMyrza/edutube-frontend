@@ -5,6 +5,7 @@ import {
   accessTokenCookieName,
   refreshTokenCookieConfig,
   refreshTokenCookieName,
+  specialMaxAgeReduceValue,
 } from "@/shared/utils/variables";
 import { serialize } from "cookie";
 
@@ -43,7 +44,7 @@ export default async function handler(
         serialize(accessTokenCookieName, access, {
           httpOnly: accessTokenCookieConfig.httpOnly,
           secure: accessTokenCookieConfig.secure,
-          maxAge: accessTokenExpiresIn,
+          maxAge: accessTokenExpiresIn - specialMaxAgeReduceValue,
           sameSite: accessTokenCookieConfig.sameSite as
             | boolean
             | "strict"
@@ -56,7 +57,7 @@ export default async function handler(
         serialize(refreshTokenCookieName, refresh, {
           httpOnly: refreshTokenCookieConfig.httpOnly,
           secure: refreshTokenCookieConfig.secure,
-          maxAge: refreshTokenExpiresIn,
+          maxAge: refreshTokenExpiresIn - specialMaxAgeReduceValue,
           sameSite: refreshTokenCookieConfig.sameSite as
             | boolean
             | "strict"

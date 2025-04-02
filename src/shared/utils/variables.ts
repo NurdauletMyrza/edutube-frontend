@@ -16,6 +16,7 @@ export const refreshTokenCookieConfig = {
   sameSite: "strict",
   path: "/",
 };
+export const specialMaxAgeReduceValue = 5;
 
 ////////////////////////////////
 

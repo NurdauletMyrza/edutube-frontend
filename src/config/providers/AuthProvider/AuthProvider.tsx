@@ -57,8 +57,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   useEffect(() => {
-    setTimeout(fetchUserDetails, 2000);
-    // fetchUserDetails();
+    // setTimeout(fetchUserDetails, 2000);
+    fetchUserDetails();
   }, []);
 
   async function logoutUser() {
