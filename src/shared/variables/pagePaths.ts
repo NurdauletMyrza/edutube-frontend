@@ -5,6 +5,7 @@ export const homePagesPath = "/home";
 
 export const authPagesPath = "/auth";
 export const loginPagePath = `${authPagesPath}/login`;
+export const authStatusPagePath = `${authPagesPath}/status`;
 
 export const cabinetPagesPath = "/cabinet";
 

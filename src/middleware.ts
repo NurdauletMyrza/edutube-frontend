@@ -7,6 +7,7 @@ import {
   specialMaxAgeReduceValue,
 } from "@/shared/utils/variables";
 import {
+  authStatusPagePath,
   cabinetPagesPath,
   // homePagePath,
   homePagesPath,
@@ -41,7 +42,7 @@ export async function middleware(request: NextRequest) {
 
   const hasRefreshToken = request.cookies.has(refreshTokenCookieName);
   const redirectResponse = NextResponse.redirect(
-    new URL(request.nextUrl.pathname, request.url)
+    new URL(authStatusPagePath, request.url)
   );
   const nextResponse = NextResponse.next();
 

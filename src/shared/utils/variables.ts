@@ -18,6 +18,8 @@ export const refreshTokenCookieConfig = {
 };
 export const specialMaxAgeReduceValue = 5;
 
+export const pageRequestVariableName = "X-Page-URL";
+
 ////////////////////////////////
 
 export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;

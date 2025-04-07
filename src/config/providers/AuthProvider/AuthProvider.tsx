@@ -41,7 +41,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState(null);
   const { showSnackbar } = useSnackbar();
-  const { push } = useRouter();
+  const { push, pathname } = useRouter();
   const { setLoading } = useLoading();
 
   async function fetchUserDetails() {
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     // setTimeout(fetchUserDetails, 2000);
     fetchUserDetails();
-  }, []);
+  }, [pathname]);
 
   async function logoutUser() {
     setLoading(true);
