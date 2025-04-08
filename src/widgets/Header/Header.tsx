@@ -21,12 +21,15 @@ const Header = () => {
   console.log(user);
 
   return (
-    <AppBar position="sticky" color="primary">
+    <AppBar component="nav" color="primary">
       {isLoading && <CircularProgress size={24} color="inherit" />}
       <Toolbar>
         {/* Логотип */}
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            href="/home"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             Мой Сайт
           </Link>
         </Typography>

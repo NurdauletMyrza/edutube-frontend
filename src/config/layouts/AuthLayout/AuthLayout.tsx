@@ -2,6 +2,7 @@ import { Box, Paper, Tabs, Tab } from "@mui/material";
 import { useRouter } from "next/router";
 import { loginPagePath, registerPagePath } from "@/shared/variables/pagePaths";
 import { FC, ReactNode } from "react";
+import Header from "@/widgets/Header/Header";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -13,39 +14,43 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
     pathname.endsWith(loginPagePath) || pathname.endsWith(registerPagePath);
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        backgroundImage: "url(/tileableBackground.jpg)",
-        backgroundSize: "777px",
-      }}
-    >
-      <Paper
+    <>
+      <Header />
+      <Box
+        component="main"
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          padding: isRegisterOrLoginPage ? 0 : 2,
-          borderRadius: 5,
-          width: 500,
+          height: "100vh",
+          backgroundImage: "url(/tileableBackground.jpg)",
+          backgroundSize: "777px",
         }}
       >
-        {isRegisterOrLoginPage && (
-          <Tabs
-            value={pathname}
-            onChange={(event, value) => {
-              push(value);
-            }}
-            variant="fullWidth"
-          >
-            <Tab label="Sign in" value={loginPagePath} />
-            <Tab label="Register" value={registerPagePath} />
-          </Tabs>
-        )}
-        {children}
-      </Paper>
-    </Box>
+        <Paper
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            padding: isRegisterOrLoginPage ? 0 : 2,
+            borderRadius: 5,
+            width: 500,
+          }}
+        >
+          {isRegisterOrLoginPage && (
+            <Tabs
+              value={pathname}
+              onChange={(event, value) => {
+                push(value);
+              }}
+              variant="fullWidth"
+            >
+              <Tab label="Sign in" value={loginPagePath} />
+              <Tab label="Register" value={registerPagePath} />
+            </Tabs>
+          )}
+          {children}
+        </Paper>
+      </Box>
+    </>
   );
 };
 
