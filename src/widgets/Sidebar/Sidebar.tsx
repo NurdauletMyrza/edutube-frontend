@@ -1,38 +1,123 @@
 import {
-  Box,
+  Button,
   Drawer,
+  IconButton,
   List,
   ListItem,
+  ListItemButton,
+  ListItemIcon,
   ListItemText,
-  Typography,
 } from "@mui/material";
+import {
+  cabinetMyCoursesPagePath,
+  cabinetProfilePagePath,
+  homePagePath,
+} from "@/shared/variables/pagePaths";
+import {
+  CastForEducationRounded,
+  HomeRounded,
+  LogoutRounded,
+  ManageAccountsRounded,
+  Person,
+  SchoolRounded,
+} from "@mui/icons-material";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
 
-const drawerWidth = 240;
+const menuItems = [
+  { text: "Home", icon: <HomeRounded />, path: homePagePath },
+  {
+    text: "Profile",
+    icon: <Person />,
+    path: cabinetProfilePagePath,
+  },
+  {
+    text: "Courses",
+    icon: <SchoolRounded />,
+    path: "/courses",
+  },
+  {
+    text: "My Courses",
+    icon: <CastForEducationRounded />,
+    path: cabinetMyCoursesPagePath,
+  },
+  {
+    text: "Settings",
+    icon: <ManageAccountsRounded />,
+    path: "/settings",
+  },
+];
 
 const Sidebar = () => {
+  const { pathname, push } = useRouter();
+  const [isHidden, setHidden] = useState(true);
+  const { logoutUser } = useAuth();
+
   return (
     <Drawer
       variant="permanent"
+      anchor="left"
       sx={{
-        width: drawerWidth,
+        width: isHidden ? 55 : 240,
         flexShrink: 0,
-        "& .MuiDrawer-paper": { width: drawerWidth, boxSizing: "border-box" },
+        transition: "width 0.3s",
+        "& .MuiDrawer-paper": {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100vh",
+          width: isHidden ? 55 : 240,
+          boxSizing: "border-box",
+          transition: "width 0.3s",
+          overflowX: "hidden",
+        },
       }}
+      onMouseOver={() => setHidden(false)}
+      onMouseOut={() => setHidden(true)}
     >
-      <Box sx={{ padding: 2 }}>
-        <Typography variant="h6">Меню</Typography>
-      </Box>
       <List>
-        <ListItem component="a" href="/dashboard">
-          <ListItemText primary="Главная" />
-        </ListItem>
-        <ListItem component="a" href="/profile">
-          <ListItemText primary="Профиль" />
-        </ListItem>
-        <ListItem component="a" href="/settings">
-          <ListItemText primary="Настройки" />
-        </ListItem>
+        {menuItems.map((menuItem) => (
+          <ListItem key={menuItem.text} disablePadding sx={{ maxWidth: 300 }}>
+            <ListItemButton
+              selected={pathname === menuItem.path}
+              onClick={() => push(menuItem.path)}
+              sx={{
+                height: 50,
+                gap: 0,
+                transition: "padding 0.3s",
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: isHidden ? 0 : 2,
+                  transition: "margin 0.3s",
+                }}
+              >
+                {menuItem.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={menuItem.text}
+                sx={{
+                  opacity: isHidden ? 0 : 1,
+                  transition: "opacity 0.3s",
+                  whiteSpace: "nowrap",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
+      {isHidden ? (
+        <IconButton onClick={logoutUser}>
+          <LogoutRounded />
+        </IconButton>
+      ) : (
+        <Button startIcon={<LogoutRounded />} onClick={logoutUser}>
+          Logout
+        </Button>
+      )}
     </Drawer>
   );
 };

@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 
 const CabinetProfilePage = () => {
-  const { user, deleteUser, logoutUser } = useAuth();
+  const { user, deleteUser } = useAuth();
   const { isLoading } = useLoading();
   const [password, setPassword] = useState<string>("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -47,15 +47,6 @@ const CabinetProfilePage = () => {
               {user.first_name} {user.last_name}
             </Typography>
           )}
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: 3 }}
-            onClick={logoutUser}
-            fullWidth
-          >
-            Logout
-          </Button>
           <Button
             variant="outlined"
             color="primary"

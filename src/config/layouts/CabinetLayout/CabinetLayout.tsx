@@ -1,5 +1,5 @@
 import Sidebar from "@/widgets/Sidebar/Sidebar";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 interface CabinetLayoutProps {
@@ -11,7 +11,6 @@ const CabinetLayout: FC<CabinetLayoutProps> = ({ children }) => {
     <>
       <Sidebar />
       <Box component="main" sx={{ flexGrow: 1, padding: 3 }}>
-        <Typography variant="h4">Private cabinet</Typography>
         {children}
       </Box>
     </>
