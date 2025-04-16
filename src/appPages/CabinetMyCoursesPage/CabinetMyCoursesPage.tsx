@@ -9,7 +9,7 @@ import {
 import { useRouter } from "next/router";
 import {
   createCoursePagePath,
-  myCourseViewPagePath,
+  myCourseViewPagesPath,
 } from "@/shared/variables/pagePaths";
 import { useEffect, useState } from "react";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
@@ -57,7 +57,7 @@ const CabinetMyCoursesPage = () => {
           <Grid item xs={12} sm={6} md={4} key={myCourse.id}>
             <Card
               sx={{ height: "100%", cursor: "pointer" }}
-              onClick={() => push(`${myCourseViewPagePath}/${myCourse.id}`)}
+              onClick={() => push(`${myCourseViewPagesPath}/${myCourse.id}`)}
             >
               <CardContent>
                 <Typography variant="h6" gutterBottom>

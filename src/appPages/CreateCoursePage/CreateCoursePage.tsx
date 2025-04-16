@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { createCourse } from "@/appPages/CreateCoursePage/scripts"; // если Pages Router
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
-import { myCourseViewPagePath } from "@/shared/variables/pagePaths";
+import { myCourseViewPagesPath } from "@/shared/variables/pagePaths";
 
 const CreateCoursePage = () => {
   const { push } = useRouter();
@@ -22,7 +22,7 @@ const CreateCoursePage = () => {
       .then((data) => {
         if (data.ok) {
           showSnackbar(data["success"] ?? "Successfully created", "success");
-          push(`${myCourseViewPagePath}/${data.id}`);
+          push(`${myCourseViewPagesPath}/${data.id}`);
         } else {
           showSnackbar(
             data["error"] ??

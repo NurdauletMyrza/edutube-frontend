@@ -6,7 +6,7 @@ import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvide
 import { Course } from "@/shared/utils/types";
 import { getCourseDetails } from "@/shared/utils/apiScripts";
 
-const MyCourseViewPage = () => {
+const CourseViewPage = () => {
   const { query } = useRouter();
   const { courseId } = query;
   const { isLoading, setLoading } = useLoading();
@@ -75,4 +75,4 @@ const MyCourseViewPage = () => {
   );
 };
 
-export default MyCourseViewPage;
+export default CourseViewPage;
