@@ -1,3 +1,3 @@
-import CabinetMyCourses from "@/appPages/CabinetMyCourses/CabinetMyCourses";
+import CabinetMyCoursesPage from "@/appPages/CabinetMyCoursesPage/CabinetMyCoursesPage";
 
-export default CabinetMyCourses;
+export default CabinetMyCoursesPage;

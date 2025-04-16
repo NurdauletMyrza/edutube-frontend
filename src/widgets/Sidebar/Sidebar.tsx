@@ -9,6 +9,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import {
+  cabinetCoursesPagePath,
   cabinetMyCoursesPagePath,
   cabinetProfilePagePath,
   homePagePath,
@@ -35,7 +36,7 @@ const menuItems = [
   {
     text: "Courses",
     icon: <SchoolRounded />,
-    path: "/courses",
+    path: cabinetCoursesPagePath,
   },
   {
     text: "My Courses",
@@ -49,6 +50,9 @@ const menuItems = [
   },
 ];
 
+export const sidebarHiddenStateWidth = "55px";
+export const sidebarExpandedStateWidth = "200px";
+
 const Sidebar = () => {
   const { pathname, push } = useRouter();
   const [isHidden, setHidden] = useState(true);
@@ -59,7 +63,7 @@ const Sidebar = () => {
       variant="permanent"
       anchor="left"
       sx={{
-        width: isHidden ? 55 : 240,
+        width: isHidden ? sidebarHiddenStateWidth : sidebarExpandedStateWidth,
         flexShrink: 0,
         transition: "width 0.3s",
         "& .MuiDrawer-paper": {
@@ -67,7 +71,7 @@ const Sidebar = () => {
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100vh",
-          width: isHidden ? 55 : 240,
+          width: isHidden ? sidebarHiddenStateWidth : sidebarExpandedStateWidth,
           boxSizing: "border-box",
           transition: "width 0.3s",
           overflowX: "hidden",
@@ -80,7 +84,7 @@ const Sidebar = () => {
         {menuItems.map((menuItem) => (
           <ListItem key={menuItem.text} disablePadding sx={{ maxWidth: 300 }}>
             <ListItemButton
-              selected={pathname === menuItem.path}
+              selected={pathname.startsWith(menuItem.path)}
               onClick={() => push(menuItem.path)}
               sx={{
                 height: 50,

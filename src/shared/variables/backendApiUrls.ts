@@ -14,4 +14,6 @@ export const logoutUserApiUrl = `${backendApiBaseUrl}users/user/logout/`;
 
 export const registerUserApiUrl = `${backendApiBaseUrl}users/register/`;
 export const uploadFileApiUrl = `${backendApiBaseUrl}upload-file/`;
-export const createCourseApiUrl = `${backendApiBaseUrl}courses/`;
+export const createCourseApiUrl = `${backendApiBaseUrl}courses/course/create/`;
+export const userCreatedCoursesApiUrl = `${backendApiBaseUrl}courses/user-created/`;
+export const allCoursesApiUrl = `${backendApiBaseUrl}courses/all/`;

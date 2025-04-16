@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
@@ -9,14 +9,14 @@ import { checkUserExistence, login } from "@/appPages/LoginPage/scripts";
 
 const LoginPage = () => {
   const { isLoading, setLoading } = useLoading();
-  const { user, reloadUser, logoutUser } = useAuth();
+  const { user, logoutUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
   const { showSnackbar } = useSnackbar();
   const { push } = useRouter();
 
-  function handleCheckEmail(event: React.FormEvent<HTMLFormElement>) {
+  function handleCheckEmail(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
 
@@ -46,7 +46,7 @@ const LoginPage = () => {
       });
   }
 
-  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+  function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
 
@@ -54,7 +54,7 @@ const LoginPage = () => {
       .then((data) => {
         if (data.ok) {
           showSnackbar(data["success"] ?? "Successfully login", "success");
-          reloadUser();
+          // reloadUser();
           push(cabinetProfilePagePath);
         } else {
           showSnackbar(

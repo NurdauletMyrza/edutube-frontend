@@ -6,6 +6,11 @@ export const logoutServerApiUrl = `${authServerApiBaseUrl}/logout`;
 export const userServerApiBaseUrl = `${serverApiBaseUrl}/authUser`;
 export const aboutMeServerApiUrl = `${userServerApiBaseUrl}/details`;
 export const deleteCurrentUserServerApiUrl = `${userServerApiBaseUrl}/deleteUser`;
+export const createCourseServerApiUrl = `${userServerApiBaseUrl}/createCourse`;
+export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreatedCourses`;
+
+export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
+export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;
 
 /////////////////////////////////////////
 
@@ -17,5 +22,4 @@ export const cancelUserActivationServerApiUrl = `${usersServerApiBaseUrl}/cancel
 
 export const loginServerApiUrl = `${authServerApiBaseUrl}/login`;
 
-export const createCourseServerApiUrl = `${serverApiBaseUrl}/courses/create`;
 export const uploadFileServerApiUrl = `${serverApiBaseUrl}/files/upload`;

@@ -1,102 +1,82 @@
-import { useState } from "react";
-import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { useState, FormEvent } from "react";
+import { TextField, Button, Typography, Box, Paper } from "@mui/material";
 import { useRouter } from "next/router";
-import { fetchApiClient } from "@/shared/utils/apiClient";
-import {
-  createCourseServerApiUrl,
-  uploadFileServerApiUrl,
-} from "@/shared/variables/serverApiUrls";
+import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
+import { createCourse } from "@/appPages/CreateCoursePage/scripts"; // если Pages Router
+import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
+import { myCourseViewPagePath } from "@/shared/variables/pagePaths";
 
-export default function CreateCoursePage() {
-  const router = useRouter();
+const CreateCoursePage = () => {
+  const { push } = useRouter();
+  const { setLoading } = useLoading();
+  const { showSnackbar } = useSnackbar();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState<FileList | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  function handleCreateCourse(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     setLoading(true);
 
-    // Step 1: Create Course
-    const courseResponse = await fetchApiClient(createCourseServerApiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, description }),
-    });
-
-    if (!courseResponse.ok) {
-      alert("Error creating course");
-      setLoading(false);
-      return;
-    }
-
-    const courseData = await courseResponse.json();
-    const courseId = courseData.id;
-
-    // Step 2: Upload Files (if any)
-    if (files) {
-      for (const file of Array.from(files)) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("course_id", courseId.toString());
-
-        await fetchApiClient(uploadFileServerApiUrl, {
-          method: "POST",
-          body: formData,
-        });
-      }
-    }
-
-    alert("Course Created!");
-    setLoading(false);
-    router.push("/cabinet/myCourses"); // Redirect to courses list
-  };
+    createCourse(title, description)
+      .then((data) => {
+        if (data.ok) {
+          showSnackbar(data["success"] ?? "Successfully created", "success");
+          push(`${myCourseViewPagePath}/${data.id}`);
+        } else {
+          showSnackbar(
+            data["error"] ??
+              data["detail"] ??
+              data["message"] ??
+              "Failed to create course",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        showSnackbar(error, "error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" align="center" gutterBottom>
-        Create a New Course
+    <Paper>
+      <Typography variant="h4" gutterBottom>
+        Create course
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={handleCreateCourse}>
         <TextField
-          label="Course Title"
-          variant="outlined"
+          label="Название курса"
           fullWidth
-          margin="normal"
           required
+          margin="normal"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
         />
         <TextField
-          label="Description"
-          variant="outlined"
+          label="Описание"
           fullWidth
-          margin="normal"
+          required
           multiline
           rows={4}
-          required
+          margin="normal"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
         />
-        <Box mt={2}>
-          <input
-            type="file"
-            multiple
-            onChange={(e) => setFiles(e.target.files)}
-          />
-        </Box>
         <Button
           type="submit"
           variant="contained"
           color="primary"
           fullWidth
-          disabled={loading}
           sx={{ mt: 2 }}
         >
-          {loading ? "Creating..." : "Create Course"}
+          Create
         </Button>
-      </form>
-    </Container>
+      </Box>
+    </Paper>
   );
-}
+};
+
+export default CreateCoursePage;
