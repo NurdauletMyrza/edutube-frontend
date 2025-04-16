@@ -9,10 +9,11 @@ export const authStatusPagePath = `${authPagesPath}/status`;
 
 export const cabinetPagesPath = "/cabinet";
 export const cabinetProfilePagePath = `${cabinetPagesPath}/profile`;
-export const cabinetMyCoursesPagePath = `${cabinetPagesPath}/myCourses`;
 export const cabinetCoursesPagePath = `${cabinetPagesPath}/courses`;
+export const cabinetMyCoursesPagePath = `${cabinetPagesPath}/myCourses`;
 export const myCourseViewPagePath = `${cabinetMyCoursesPagePath}/course`;
 export const createCoursePagePath = `${cabinetMyCoursesPagePath}/create`;
+export const cabinetSettingsPagePath = `${cabinetPagesPath}/settings`;
 
 /////////////////////////////////////////////////////////
 

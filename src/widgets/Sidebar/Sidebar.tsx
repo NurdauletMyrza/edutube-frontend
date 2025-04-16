@@ -12,6 +12,7 @@ import {
   cabinetCoursesPagePath,
   cabinetMyCoursesPagePath,
   cabinetProfilePagePath,
+  cabinetSettingsPagePath,
   homePagePath,
 } from "@/shared/variables/pagePaths";
 import {
@@ -46,7 +47,7 @@ const menuItems = [
   {
     text: "Settings",
     icon: <ManageAccountsRounded />,
-    path: "/settings",
+    path: cabinetSettingsPagePath,
   },
 ];
 

@@ -11,6 +11,7 @@ export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreated
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;
+export const getCourseDetailsServerApiBaseUrl = `${coursesServerApiUrl}/getCourseDetails`;
 
 /////////////////////////////////////////
 

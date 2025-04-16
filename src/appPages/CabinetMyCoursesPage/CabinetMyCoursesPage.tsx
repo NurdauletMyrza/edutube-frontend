@@ -7,7 +7,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import { createCoursePagePath } from "@/shared/variables/pagePaths";
+import {
+  createCoursePagePath,
+  myCourseViewPagePath,
+} from "@/shared/variables/pagePaths";
 import { useEffect, useState } from "react";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { getMyCourses } from "@/appPages/CabinetMyCoursesPage/scripts";
@@ -52,7 +55,10 @@ const CabinetMyCoursesPage = () => {
       <Grid container spacing={3} padding={2}>
         {myCourses.map((myCourse) => (
           <Grid item xs={12} sm={6} md={4} key={myCourse.id}>
-            <Card sx={{ height: "100%" }}>
+            <Card
+              sx={{ height: "100%", cursor: "pointer" }}
+              onClick={() => push(`${myCourseViewPagePath}/${myCourse.id}`)}
+            >
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   {myCourse.title}

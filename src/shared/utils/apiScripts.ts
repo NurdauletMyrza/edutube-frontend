@@ -2,7 +2,21 @@ import { fetchApiClient } from "@/shared/utils/apiClient";
 import {
   logoutServerApiUrl,
   deleteCurrentUserServerApiUrl,
+  getCourseDetailsServerApiBaseUrl,
 } from "@/shared/variables/serverApiUrls";
+
+export async function getCourseDetails(courseId: number) {
+  try {
+    const response = await fetchApiClient(
+      `${getCourseDetailsServerApiBaseUrl}/${courseId}`
+    );
+
+    const data = await response.json();
+    return { ok: response.ok, ...data };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
 
 export async function logoutCurrentUser() {
   try {

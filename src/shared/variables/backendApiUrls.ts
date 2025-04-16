@@ -17,3 +17,4 @@ export const uploadFileApiUrl = `${backendApiBaseUrl}upload-file/`;
 export const createCourseApiUrl = `${backendApiBaseUrl}courses/course/create/`;
 export const userCreatedCoursesApiUrl = `${backendApiBaseUrl}courses/user-created/`;
 export const allCoursesApiUrl = `${backendApiBaseUrl}courses/all/`;
+export const getCourseDetailsApiBaseUrl = `${backendApiBaseUrl}courses/course/`;
