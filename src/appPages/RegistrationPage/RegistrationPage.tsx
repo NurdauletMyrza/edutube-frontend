@@ -57,6 +57,7 @@ const RegistrationPage = () => {
       <Box
         component="form"
         onSubmit={handleSubmit}
+        margin={2}
         sx={{ display: "flex", flexDirection: "column", gap: 2 }}
       >
         <TextField
