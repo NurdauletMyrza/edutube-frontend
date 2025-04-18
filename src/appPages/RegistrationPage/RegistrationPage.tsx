@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  TextField,
-  Button,
-  Container,
-  Typography,
-  Box,
-  Alert,
-} from "@mui/material";
+import { TextField, Button, Container, Box, Alert } from "@mui/material";
 import { fetchApiClient } from "@/shared/utils/apiClient";
 import { registerUserServerApiUrl } from "@/shared/variables/serverApiUrls";
 
@@ -59,9 +52,6 @@ const RegistrationPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        Регистрация
-      </Typography>
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
       <Box
@@ -78,21 +68,21 @@ const RegistrationPage = () => {
           required
         />
         <TextField
-          label="Имя"
+          label="First Name"
           name="first_name"
           value={formData.first_name}
           onChange={handleChange}
           required
         />
         <TextField
-          label="Фамилия"
+          label="Last Name"
           name="last_name"
           value={formData.last_name}
           onChange={handleChange}
           required
         />
         <TextField
-          label="Пароль"
+          label="Password"
           name="password"
           type="password"
           value={formData.password}
@@ -100,7 +90,7 @@ const RegistrationPage = () => {
           required
         />
         <TextField
-          label="Подтвердите пароль"
+          label="Confirm Password"
           name="confirm_password"
           type="password"
           value={formData.confirm_password}
@@ -113,7 +103,7 @@ const RegistrationPage = () => {
           color="primary"
           disabled={loading}
         >
-          {loading ? "Регистрация..." : "Зарегистрироваться"}
+          {loading ? "Registration..." : "Register"}
         </Button>
       </Box>
     </Container>

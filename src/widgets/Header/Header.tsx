@@ -18,7 +18,6 @@ import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 const Header = () => {
   const { user, logoutUser } = useAuth();
   const { isLoading } = useLoading();
-  console.log(user);
 
   return (
     <AppBar component="nav" color="primary">

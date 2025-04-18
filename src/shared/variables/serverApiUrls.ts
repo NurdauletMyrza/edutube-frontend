@@ -8,6 +8,8 @@ export const aboutMeServerApiUrl = `${userServerApiBaseUrl}/details`;
 export const deleteCurrentUserServerApiUrl = `${userServerApiBaseUrl}/deleteUser`;
 export const createCourseServerApiUrl = `${userServerApiBaseUrl}/createCourse`;
 export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreatedCourses`;
+export const createModuleServerApiUrl = `${userServerApiBaseUrl}/createModule`;
+export const createLessonServerApiUrl = `${userServerApiBaseUrl}/createLesson`;
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;

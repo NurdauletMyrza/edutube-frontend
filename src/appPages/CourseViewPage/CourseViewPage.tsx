@@ -5,38 +5,47 @@ import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { Course } from "@/shared/utils/types";
 import { getCourseDetails } from "@/shared/utils/apiScripts";
+import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
+import { myCourseViewPagesPath } from "@/shared/variables/pagePaths";
 
 const CourseViewPage = () => {
-  const { query } = useRouter();
+  const { push, query } = useRouter();
+  const { user } = useAuth();
   const { courseId } = query;
   const { isLoading, setLoading } = useLoading();
   const { showSnackbar } = useSnackbar();
   const [courseDetails, setCourseDetails] = useState<Course>();
 
   useEffect(() => {
-    setLoading(true);
+    if (Number(courseId)) {
+      setLoading(true);
 
-    getCourseDetails(Number(courseId))
-      .then((data) => {
-        if (data.ok) {
-          setCourseDetails(data.courseDetails);
-        } else {
-          showSnackbar(
-            data["error"] ??
-              data["detail"] ??
-              data["message"] ??
-              "Failed to get course details",
-            "error"
-          );
-        }
-      })
-      .catch((error) => {
-        showSnackbar(error, "error");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+      getCourseDetails(Number(courseId))
+        .then((data) => {
+          if (data.ok) {
+            if (data.courseDetails.author === user?.id) {
+              push(`${myCourseViewPagesPath}/${courseId}`);
+            } else {
+              setCourseDetails(data.courseDetails);
+            }
+          } else {
+            showSnackbar(
+              data["error"] ??
+                data["detail"] ??
+                data["message"] ??
+                "Failed to get course details",
+              "error"
+            );
+          }
+        })
+        .catch((error) => {
+          showSnackbar(error, "error");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [courseId]);
 
   if (isLoading) {
     return (
@@ -55,7 +64,7 @@ const CourseViewPage = () => {
           </Typography>
 
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-            Author: {courseDetails.author}
+            AuthorID: {courseDetails.author}
           </Typography>
 
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
