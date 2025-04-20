@@ -71,7 +71,7 @@ const MyCourseViewPage = () => {
   }
 
   async function fetchCourseDetails() {
-    if (Number(courseId)) {
+    if (!!Number(courseId) && !!user) {
       setLoading(true);
 
       getCourseDetails(Number(courseId))
@@ -103,7 +103,7 @@ const MyCourseViewPage = () => {
 
   useEffect(() => {
     fetchCourseDetails();
-  }, [courseId]);
+  }, [courseId, user]);
 
   if (isLoading) {
     return (
@@ -118,8 +118,6 @@ const MyCourseViewPage = () => {
       </Paper>
     );
   }
-
-  console.log(courseDetails);
 
   return (
     <>

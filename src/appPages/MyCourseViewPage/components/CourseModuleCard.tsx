@@ -1,5 +1,6 @@
 import {
   Accordion,
+  AccordionActions,
   AccordionDetails,
   AccordionSummary,
   Button,
@@ -14,6 +15,8 @@ import CModal from "@/shared/components/CModal";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { createLesson } from "@/appPages/MyCourseViewPage/scripts";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
+import { useRouter } from "next/router";
+import { myLessonViewPagesPath } from "@/shared/variables/pagePaths";
 
 type CourseModuleCardProps = Module & {
   refetchCourseDetails: () => void;
@@ -23,6 +26,7 @@ const CourseModuleCard = ({
   refetchCourseDetails,
   ...module
 }: CourseModuleCardProps) => {
+  const { push } = useRouter();
   const { setLoading } = useLoading();
   const { showSnackbar } = useSnackbar();
   const [isLessonCreateModalOpen, setLessonCreateModalOpen] =
@@ -88,9 +92,17 @@ const CourseModuleCard = ({
             <Typography variant="h6">{lesson.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>{lesson.content}</AccordionDetails>
+          <AccordionActions>
+            <Button
+              onClick={() => push(`${myLessonViewPagesPath}/${lesson.id}`)}
+            >
+              View details
+            </Button>
+          </AccordionActions>
         </Accordion>
       ))}
       <Button
+        variant="outlined"
         fullWidth
         startIcon={<MenuBookRounded />}
         sx={{ mt: 4 }}

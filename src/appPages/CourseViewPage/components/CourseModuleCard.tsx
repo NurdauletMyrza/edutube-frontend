@@ -1,14 +1,20 @@
 import {
   Accordion,
+  AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Button,
   Paper,
   Typography,
 } from "@mui/material";
 import { Module } from "@/shared/utils/types";
 import { ExpandMoreRounded } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import { lessonViewPagesPath } from "@/shared/variables/pagePaths";
 
 const CourseModuleCard = (module: Module) => {
+  const { push } = useRouter();
+
   return (
     <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
       <Typography variant="h5" gutterBottom>
@@ -23,6 +29,11 @@ const CourseModuleCard = (module: Module) => {
             <Typography variant="h6">{lesson.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>{lesson.content}</AccordionDetails>
+          <AccordionActions>
+            <Button onClick={() => push(`${lessonViewPagesPath}/${lesson.id}`)}>
+              View details
+            </Button>
+          </AccordionActions>
         </Accordion>
       ))}
     </Paper>

@@ -9,10 +9,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import {
-  cabinetCoursesPagePath,
-  cabinetMyCoursesPagePath,
-  cabinetProfilePagePath,
-  cabinetSettingsPagePath,
+  cabinetCoursesPagesPath,
+  cabinetMyCoursesPagesPath,
+  cabinetProfilePagesPath,
+  cabinetSettingsPagesPath,
   homePagePath,
 } from "@/shared/variables/pagePaths";
 import {
@@ -32,22 +32,22 @@ const menuItems = [
   {
     text: "Profile",
     icon: <Person />,
-    path: cabinetProfilePagePath,
+    path: cabinetProfilePagesPath,
   },
   {
     text: "Courses",
     icon: <SchoolRounded />,
-    path: cabinetCoursesPagePath,
+    path: cabinetCoursesPagesPath,
   },
   {
     text: "My Courses",
     icon: <CastForEducationRounded />,
-    path: cabinetMyCoursesPagePath,
+    path: cabinetMyCoursesPagesPath,
   },
   {
     text: "Settings",
     icon: <ManageAccountsRounded />,
-    path: cabinetSettingsPagePath,
+    path: cabinetSettingsPagesPath,
   },
 ];
 

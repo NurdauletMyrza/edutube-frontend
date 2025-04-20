@@ -29,20 +29,20 @@ const Header = () => {
             href="/home"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            Мой Сайт
+            EduTube
           </Link>
         </Typography>
 
         {/* Навигация */}
         <Box sx={{ display: "flex", gap: 2 }}>
           <Button color="inherit" component={Link} href="/">
-            О нас
+            About us
           </Button>
           <Button color="inherit" component={Link} href="/">
-            Услуги
+            Services
           </Button>
           <Button color="inherit" component={Link} href="/">
-            Контакты
+            Contact us
           </Button>
         </Box>
 
@@ -50,8 +50,8 @@ const Header = () => {
         <Box sx={{ marginLeft: 2 }}>
           {user ? (
             <>
-              <Button color="inherit" onClick={logoutUser}>
-                Выход
+              <Button variant="outlined" color="inherit" onClick={logoutUser}>
+                Log out
               </Button>
               <Button
                 variant="contained"
@@ -64,8 +64,13 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button color="inherit" component={Link} href={loginPagePath}>
-                Вход
+              <Button
+                variant="outlined"
+                color="inherit"
+                component={Link}
+                href={loginPagePath}
+              >
+                Log in
               </Button>
               <Button
                 variant="contained"
@@ -73,7 +78,7 @@ const Header = () => {
                 component={Link}
                 href={registerPagePath}
               >
-                Регистрация
+                Registration
               </Button>
             </>
           )}

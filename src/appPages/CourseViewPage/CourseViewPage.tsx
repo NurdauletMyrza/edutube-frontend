@@ -18,7 +18,7 @@ const CourseViewPage = () => {
   const [courseDetails, setCourseDetails] = useState<Course>();
 
   useEffect(() => {
-    if (Number(courseId)) {
+    if (!!Number(courseId) && !!user) {
       setLoading(true);
 
       getCourseDetails(Number(courseId))
@@ -46,7 +46,7 @@ const CourseViewPage = () => {
           setLoading(false);
         });
     }
-  }, [courseId]);
+  }, [courseId, user]);
 
   if (isLoading) {
     return (

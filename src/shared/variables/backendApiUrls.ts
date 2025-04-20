@@ -20,3 +20,4 @@ export const createLessonApiUrl = `${backendApiBaseUrl}courses/lesson/create/`;
 export const userCreatedCoursesApiUrl = `${backendApiBaseUrl}courses/user-created/`;
 export const allCoursesApiUrl = `${backendApiBaseUrl}courses/all/`;
 export const getCourseDetailsApiBaseUrl = `${backendApiBaseUrl}courses/course/`;
+export const getLessonDetailsApiBaseUrl = `${backendApiBaseUrl}courses/lesson/`;

@@ -24,6 +24,23 @@ export interface Lesson {
   created_at: string;
 }
 
+export interface DetailedLesson {
+  id: number;
+  title: string;
+  content: string;
+  order: number;
+  created_at: string;
+  module: {
+    id: number;
+    title: string;
+    course: {
+      id: number;
+      title: string;
+      author: number;
+    };
+  };
+}
+
 export interface createModuleInput {
   course: number;
   title: string;

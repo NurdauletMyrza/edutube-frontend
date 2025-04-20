@@ -10,6 +10,7 @@ export const createCourseServerApiUrl = `${userServerApiBaseUrl}/createCourse`;
 export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreatedCourses`;
 export const createModuleServerApiUrl = `${userServerApiBaseUrl}/createModule`;
 export const createLessonServerApiUrl = `${userServerApiBaseUrl}/createLesson`;
+export const getLessonDetailsServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonDetails`;
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;
