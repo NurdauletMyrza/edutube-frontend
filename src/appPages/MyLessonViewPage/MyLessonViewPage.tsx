@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { lessonViewPagesPath } from "@/shared/variables/pagePaths";
 import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
 import { DetailedLesson } from "@/shared/utils/types";
+import LessonFileUploader from "@/appPages/MyLessonViewPage/components/LessonFileUploader";
 
 const MyLessonViewPage = () => {
   const { query, push } = useRouter();
@@ -52,10 +53,13 @@ const MyLessonViewPage = () => {
   console.log(lessonDetails, user);
 
   return (
-    <Paper elevation={0}>
-      Lesson view page: {lessonId}
-      <Typography variant="h3">{lessonDetails?.title}</Typography>{" "}
-    </Paper>
+    <>
+      <Paper elevation={0}>
+        Lesson view page: {lessonId}
+        <Typography variant="h3">{lessonDetails?.title}</Typography>{" "}
+      </Paper>
+      <LessonFileUploader lessonId={Number(lessonId)} />
+    </>
   );
 };
 

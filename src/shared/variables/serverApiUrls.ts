@@ -11,6 +11,9 @@ export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreated
 export const createModuleServerApiUrl = `${userServerApiBaseUrl}/createModule`;
 export const createLessonServerApiUrl = `${userServerApiBaseUrl}/createLesson`;
 export const getLessonDetailsServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonDetails`;
+export const getLessonFilesServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonFiles`;
+export const getLessonFileUploadUrlServerApiUrl = `${userServerApiBaseUrl}/getLessonFileUploadUrl`;
+export const saveLessonFileServerApiUrl = `${userServerApiBaseUrl}/saveLessonFile`;
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;

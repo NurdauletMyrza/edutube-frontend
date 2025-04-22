@@ -4,7 +4,21 @@ import {
   deleteCurrentUserServerApiUrl,
   getCourseDetailsServerApiBaseUrl,
   getLessonDetailsServerApiBaseUrl,
+  getLessonFilesServerApiBaseUrl,
 } from "@/shared/variables/serverApiUrls";
+
+export async function getLessonFiles(lessonId: number) {
+  try {
+    const response = await fetchApiClient(
+      `${getLessonFilesServerApiBaseUrl}/${lessonId}`
+    );
+
+    const data = await response.json();
+    return { ok: response.ok, ...data };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
 
 export async function getLessonDetails(lessonId: number) {
   try {
