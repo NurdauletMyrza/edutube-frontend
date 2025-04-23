@@ -9,9 +9,12 @@ import {
   Card,
   CardHeader,
   CardContent,
+  CardActions,
+  IconButton,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
+  deleteLessonFile,
   getLessonFileUploadUrl,
   saveLessonFile,
 } from "@/appPages/MyLessonViewPage/scripts";
@@ -20,6 +23,7 @@ import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { getLessonFiles } from "@/shared/utils/apiScripts";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import { LessonFile } from "@/shared/utils/types";
+import { DeleteRounded } from "@mui/icons-material";
 
 const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
   const { showSnackbar } = useSnackbar();
@@ -27,6 +31,32 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [lessonFiles, setLessonFiles] = useState<LessonFile[]>([]);
   const { setLoading } = useLoading();
+
+  function handleDeleteFile(lessonFileId: number) {
+    setLoading(true);
+
+    deleteLessonFile(lessonFileId)
+      .then((data) => {
+        if (data.ok) {
+          showSnackbar(data["success"] ?? "Successfully deleted lesson file");
+          fetchLessonFiles();
+        } else {
+          showSnackbar(
+            data["error"] ??
+              data["detail"] ??
+              data["message"] ??
+              "Error delete lesson file",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        showSnackbar(error, "error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   async function fetchLessonFiles() {
     if (!!lessonId) {
@@ -161,6 +191,11 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
                   <strong>Lesson ID:</strong> {file.lesson}
                 </Typography>
               </CardContent>
+              <CardActions>
+                <IconButton onClick={() => handleDeleteFile(file.id)}>
+                  <DeleteRounded />
+                </IconButton>
+              </CardActions>
             </Card>
           </Grid>
         ))}

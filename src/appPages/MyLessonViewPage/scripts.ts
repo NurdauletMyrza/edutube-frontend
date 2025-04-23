@@ -1,5 +1,6 @@
 import { fetchApiClient } from "@/shared/utils/apiClient";
 import {
+  deleteLessonFileServerApiBaseUrl,
   getLessonFileUploadUrlServerApiUrl,
   saveLessonFileServerApiUrl,
 } from "@/shared/variables/serverApiUrls";
@@ -26,7 +27,7 @@ export async function getLessonFileUploadUrl(
 
 export async function saveLessonFile(
   lesson: number,
-  file_id: number,
+  file_id: string,
   filename: string
 ) {
   try {
@@ -37,6 +38,20 @@ export async function saveLessonFile(
       },
       body: JSON.stringify({ lesson, file_id, filename }),
     });
+
+    const data = await response.json();
+    return { ok: response.ok, ...data };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function deleteLessonFile(lessonFileId: number) {
+  try {
+    const response = await fetchApiClient(
+      `${deleteLessonFileServerApiBaseUrl}/${lessonFileId}`,
+      { method: "DELETE" }
+    );
 
     const data = await response.json();
     return { ok: response.ok, ...data };

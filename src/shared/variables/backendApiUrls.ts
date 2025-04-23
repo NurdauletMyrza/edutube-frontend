@@ -21,6 +21,7 @@ export const userCreatedCoursesApiUrl = `${backendApiBaseUrl}courses/user-create
 export const allCoursesApiUrl = `${backendApiBaseUrl}courses/all/`;
 export const getCourseDetailsApiBaseUrl = `${backendApiBaseUrl}courses/course/`;
 export const getLessonDetailsApiBaseUrl = `${backendApiBaseUrl}courses/lesson/`;
+export const deleteLessonFileApiBaseUrl = `${backendApiBaseUrl}courses/file/delete-lesson-file/`;
 export const getLessonFilesApiBaseUrl = `${backendApiBaseUrl}courses/files/get-lesson-files/`;
 export const getLessonFileUploadUrlApiUrl = `${backendApiBaseUrl}courses/file/upload-url/`;
 export const saveLessonFileApiUrl = `${backendApiBaseUrl}courses/file/save-file/`;
