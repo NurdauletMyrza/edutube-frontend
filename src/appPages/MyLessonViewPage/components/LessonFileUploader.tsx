@@ -1,5 +1,15 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, LinearProgress, Typography, Input } from "@mui/material";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  LinearProgress,
+  Typography,
+  Input,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   getLessonFileUploadUrl,
@@ -8,12 +18,14 @@ import {
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { getLessonFiles } from "@/shared/utils/apiScripts";
+import FilePresentIcon from "@mui/icons-material/FilePresent";
+import { LessonFile } from "@/shared/utils/types";
 
 const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
   const { showSnackbar } = useSnackbar();
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [lessonFiles, setLessonFiles] = useState([]);
+  const [lessonFiles, setLessonFiles] = useState<LessonFile[]>([]);
   const { setLoading } = useLoading();
 
   async function fetchLessonFiles() {
@@ -127,6 +139,33 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
       borderRadius={2}
       bgcolor="#fafafa"
     >
+      <Typography variant="h6">File Manager</Typography>
+
+      <Grid container spacing={3}>
+        {lessonFiles.map((file) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={file.id}>
+            <Card
+              variant="outlined"
+              sx={{ height: "100%", position: "relative" }}
+            >
+              <CardHeader
+                avatar={<FilePresentIcon color="primary" />}
+                title={file.filename}
+                subheader={`Uploaded ${new Date(file.uploaded_at)} ago`}
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  <strong>File ID:</strong> {file.file_id}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <strong>Lesson ID:</strong> {file.lesson}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
       <Typography variant="h6">File Uploader</Typography>
 
       <Input type="file" onChange={handleFileChange} />

@@ -54,3 +54,11 @@ export interface createLessonInput {
   content: string;
   order: number;
 }
+
+export interface LessonFile {
+  id: number;
+  file_id: string;
+  filename: string;
+  lesson: number;
+  uploaded_at: string;
+}
