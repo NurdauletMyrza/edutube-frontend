@@ -4,7 +4,7 @@ import {
   accessTokenCookieName,
   refreshTokenCookieConfig,
   refreshTokenCookieName,
-} from "@/shared/utils/variables";
+} from "@/shared/variables/variables";
 import { serialize } from "cookie";
 import { logoutUserApiUrl } from "@/shared/variables/backendApiUrls";
 

@@ -1,4 +1,4 @@
-import { studentRole, teacherRole } from "@/shared/utils/variables";
+import { studentRole, teacherRole } from "@/shared/variables/variables";
 
 const ChooseRolePage = () => {
   function setUserRole(role: string) {

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { uploadFileApiUrl } from "@/shared/variables/backendApiUrls";
-import { accessTokenCookieName } from "@/shared/utils/variables";
+import { accessTokenCookieName } from "@/shared/variables/variables";
 
 export default async function handler(
   req: NextApiRequest,

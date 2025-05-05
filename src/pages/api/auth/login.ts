@@ -6,7 +6,7 @@ import {
   refreshTokenCookieConfig,
   refreshTokenCookieName,
   specialMaxAgeReduceValue,
-} from "@/shared/utils/variables";
+} from "@/shared/variables/variables";
 import { serialize } from "cookie";
 
 export default async function handler(

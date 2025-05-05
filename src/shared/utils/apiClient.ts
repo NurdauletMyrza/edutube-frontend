@@ -2,7 +2,7 @@ import {
   authServerApiBaseUrl,
   userServerApiBaseUrl,
 } from "@/shared/variables/serverApiUrls";
-import { pageRequestVariableName } from "@/shared/utils/variables";
+import { pageRequestVariableName } from "@/shared/variables/variables";
 
 const useAuthServerApiBaseUrls = [authServerApiBaseUrl, userServerApiBaseUrl];
 

@@ -22,13 +22,13 @@ const Footer = () => {
         {/* Навигационные ссылки */}
         <Box sx={{ display: "flex", gap: 3, marginBottom: 1 }}>
           <Link href="/" color="inherit" underline="none">
-            О нас
+            About us
           </Link>
           <Link href="/" color="inherit" underline="none">
-            Услуги
+            Services
           </Link>
           <Link href="/" color="inherit" underline="none">
-            Контакты
+            Contacts
           </Link>
         </Box>
 
@@ -59,7 +59,7 @@ const Footer = () => {
 
         {/* Копирайт */}
         <Typography variant="body2" sx={{ marginTop: 1 }}>
-          © {new Date().getFullYear()} Мой Сайт. Все права защищены.
+          © {new Date().getFullYear()} My Site. All rights reserved.
         </Typography>
       </Toolbar>
     </AppBar>

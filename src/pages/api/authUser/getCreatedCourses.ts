@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { accessTokenCookieName } from "@/shared/utils/variables";
+import { accessTokenCookieName } from "@/shared/variables/variables";
 import { userCreatedCoursesApiUrl } from "@/shared/variables/backendApiUrls";
 
 export default async function handler(
