@@ -2,6 +2,8 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import Link from "next/link";
 import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
 import {
+  cabinetCoursesPagesPath,
+  cabinetMyCoursesPagesPath,
   cabinetProfilePagePath,
   loginPagePath,
   // registerPagePath,
@@ -14,11 +16,13 @@ const Header = () => {
     <AppBar
       component="nav"
       elevation={0}
+      color="default"
       sx={{
         backgroundImage:
-          "linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0))",
+          "linear-gradient(to bottom, rgba(244,244,248,1), rgba(244, 244, 248, 0.7), rgba(244, 244, 248, 0.4), rgba(244, 244, 248, 0))",
         backgroundColor: "transparent",
         boxShadow: "none",
+        height: "80px",
       }}
     >
       {/*{isLoading && <CircularProgress size={24} color="inherit" />}*/}
@@ -38,11 +42,21 @@ const Header = () => {
           <Button
             color="inherit"
             component={Link}
-            href="/home/courses"
+            href={!!user ? cabinetCoursesPagesPath : "/home/courses"}
             sx={{ textTransform: "none", fontWeight: "bold" }}
           >
             Courses
           </Button>
+          {!!user && (
+            <Button
+              color="inherit"
+              component={Link}
+              href={cabinetMyCoursesPagesPath}
+              sx={{ textTransform: "none", fontWeight: "bold" }}
+            >
+              My courses
+            </Button>
+          )}
           <Button
             color="inherit"
             component={Link}
@@ -63,7 +77,7 @@ const Header = () => {
 
         {/* Кнопки входа и регистрации */}
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          {user ? (
+          {!!user ? (
             <>
               <Button
                 variant="outlined"

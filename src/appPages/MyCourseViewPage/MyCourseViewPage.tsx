@@ -121,7 +121,10 @@ const MyCourseViewPage = () => {
 
   return (
     <>
-      <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+      <Paper
+        elevation={0}
+        sx={{ p: 4, mt: 4, backgroundColor: "#F4F4F8", borderRadius: 4 }}
+      >
         <Typography variant="h4" gutterBottom>
           {courseDetails.title}
         </Typography>

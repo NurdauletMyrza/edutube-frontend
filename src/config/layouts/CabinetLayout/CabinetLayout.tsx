@@ -1,6 +1,7 @@
-import Sidebar, { sidebarHiddenStateWidth } from "@/widgets/Sidebar/Sidebar";
+import { sidebarHiddenStateWidth } from "@/widgets/Sidebar/Sidebar";
 import { Box, Container } from "@mui/material";
 import { FC, ReactNode } from "react";
+import Header from "@/widgets/Header/Header";
 
 interface CabinetLayoutProps {
   children: ReactNode;
@@ -9,8 +10,9 @@ interface CabinetLayoutProps {
 const CabinetLayout: FC<CabinetLayoutProps> = ({ children }) => {
   return (
     <>
-      <Sidebar />
-      <Box component="main" marginLeft={sidebarHiddenStateWidth} marginY={5}>
+      {/*<Sidebar />*/}
+      <Header />
+      <Box component="main" marginLeft={sidebarHiddenStateWidth} marginY={10}>
         <Container
           maxWidth="lg"
           sx={{

@@ -42,21 +42,22 @@ const CreateCoursePage = () => {
   }
 
   return (
-    <Paper>
+    <Paper sx={{ backgroundColor: "#F4F4F8", padding: 3, borderRadius: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Create course
+        Create a new course
       </Typography>
       <Box component="form" onSubmit={handleCreateCourse}>
         <TextField
-          label="Название курса"
+          label="Name"
           fullWidth
           required
           margin="normal"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
         <TextField
-          label="Описание"
+          label="Description"
           fullWidth
           required
           multiline
@@ -64,6 +65,7 @@ const CreateCoursePage = () => {
           margin="normal"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
+          sx={{ backgroundColor: "white" }}
         />
         <Button
           type="submit"

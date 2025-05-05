@@ -1,21 +1,13 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import {
-  createCoursePagePath,
-  myCourseViewPagesPath,
-} from "@/shared/variables/pagePaths";
+import { createCoursePagePath } from "@/shared/variables/pagePaths";
 import { useEffect, useState } from "react";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { getMyCourses } from "@/appPages/CabinetMyCoursesPage/scripts";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { Course } from "@/shared/utils/types";
+import CoursesHolderAccordion from "@/shared/components/CoursesHolderAccordion";
+import { AddRounded } from "@mui/icons-material";
 
 const CabinetMyCoursesPage = () => {
   const { push } = useRouter();
@@ -49,35 +41,20 @@ const CabinetMyCoursesPage = () => {
   }, []);
 
   return (
-    <Box>
-      Cabinet my courses
-      <Button onClick={() => push(createCoursePagePath)}>Create course</Button>
-      <Grid container spacing={3} padding={2}>
-        {myCourses.map((myCourse) => (
-          <Grid item xs={12} sm={6} md={4} key={myCourse.id}>
-            <Card
-              sx={{ height: "100%", cursor: "pointer" }}
-              onClick={() => push(`${myCourseViewPagesPath}/${myCourse.id}`)}
-            >
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {myCourse.title}
-                </Typography>
-                <Typography variant="body2" whiteSpace="pre-line">
-                  {myCourse.description}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="block"
-                  sx={{ marginTop: 1, color: "gray" }}
-                >
-                  Created at: {new Date(myCourse.created_at).toLocaleString()}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+    <Box display="flex" flexDirection="column" gap="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h5">My courses list</Typography>
+        <Button
+          variant="contained"
+          onClick={() => push(createCoursePagePath)}
+          startIcon={<AddRounded />}
+        >
+          Create course
+        </Button>
+      </Box>
+      <CoursesHolderAccordion courses={myCourses} accordionTitle="Active" />
+      <CoursesHolderAccordion courses={myCourses} accordionTitle="Drafts" />
+      <CoursesHolderAccordion courses={myCourses} accordionTitle="Checking" />
     </Box>
   );
 };

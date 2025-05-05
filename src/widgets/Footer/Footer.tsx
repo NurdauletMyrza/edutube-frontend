@@ -10,7 +10,7 @@ import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 
 const Footer = () => {
   return (
-    <AppBar position="static" color="primary" sx={{ marginTop: "auto" }}>
+    <AppBar position="static" color="success" sx={{ marginTop: "auto" }}>
       <Toolbar
         sx={{
           display: "flex",

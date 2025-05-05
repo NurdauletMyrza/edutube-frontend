@@ -4,6 +4,8 @@ export interface Course {
   description: string;
   created_at: string;
   author: number;
+  author_first_name: string;
+  author_last_name: string;
   modules: Module[];
 }
 
