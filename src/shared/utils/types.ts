@@ -64,3 +64,22 @@ export interface LessonFile {
   lesson: number;
   uploaded_at: string;
 }
+
+export type Option = {
+  id: number;
+  text: string;
+  is_correct: boolean;
+};
+
+export type Question = {
+  id: number;
+  text: string;
+  options: Option[];
+};
+
+export type Test = {
+  id: number;
+  lesson: number;
+  created_at: string;
+  questions: Question[];
+};

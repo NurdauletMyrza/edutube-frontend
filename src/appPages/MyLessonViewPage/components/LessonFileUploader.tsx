@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
-  Box,
   Button,
   LinearProgress,
   Typography,
@@ -11,6 +10,7 @@ import {
   CardContent,
   CardActions,
   IconButton,
+  Paper,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
@@ -38,7 +38,10 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
     deleteLessonFile(lessonFileId)
       .then((data) => {
         if (data.ok) {
-          showSnackbar(data["success"] ?? "Successfully deleted lesson file");
+          showSnackbar(
+            data["success"] ?? "Successfully deleted lesson file",
+            "success"
+          );
           fetchLessonFiles();
         } else {
           showSnackbar(
@@ -160,14 +163,15 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
   }
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      gap={2}
-      p={2}
-      border="1px solid #ccc"
-      borderRadius={2}
-      bgcolor="#fafafa"
+    <Paper
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        padding: 2,
+        backgroundColor: "#F4F4F8",
+        borderRadius: 4,
+      }}
     >
       <Typography variant="h6">File Manager</Typography>
 
@@ -203,11 +207,38 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
 
       <Typography variant="h6">File Uploader</Typography>
 
-      <Input type="file" onChange={handleFileChange} />
+      <Input
+        type="file"
+        id="file-upload"
+        onChange={handleFileChange}
+        sx={{ display: "none" }}
+      />
+      <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
+        <Card
+          variant="outlined"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 4,
+            height: 150,
+            borderStyle: "dashed",
+            color: "#888",
+            "&:hover": {
+              backgroundColor: "#f0f0f0",
+            },
+          }}
+        >
+          <CloudUploadIcon fontSize="large" />
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Click for upload
+          </Typography>
+        </Card>
+      </label>
 
       {file && (
         <Typography variant="body2" color="textSecondary">
-          Выбран файл: {file.name}
+          Selected file: {file.name}
         </Typography>
       )}
 
@@ -223,9 +254,9 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
         disabled={!file || isUploading}
         startIcon={<CloudUploadIcon />}
       >
-        Загрузить
+        Upload
       </Button>
-    </Box>
+    </Paper>
   );
 };
 

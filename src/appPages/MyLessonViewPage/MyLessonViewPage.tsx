@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Card, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
 import { getLessonDetails } from "@/shared/utils/apiScripts";
@@ -8,6 +8,7 @@ import { lessonViewPagesPath } from "@/shared/variables/pagePaths";
 import { useAuth } from "@/config/providers/AuthProvider/AuthProvider";
 import { DetailedLesson } from "@/shared/utils/types";
 import LessonFileUploader from "@/appPages/MyLessonViewPage/components/LessonFileUploader";
+import TestGenerator from "@/appPages/MyLessonViewPage/components/TestGenerator";
 
 const MyLessonViewPage = () => {
   const { query, push } = useRouter();
@@ -53,13 +54,26 @@ const MyLessonViewPage = () => {
   console.log(lessonDetails, user);
 
   return (
-    <>
-      <Paper elevation={0}>
-        Lesson view page: {lessonId}
-        <Typography variant="h3">{lessonDetails?.title}</Typography>{" "}
+    <Box display="flex" flexDirection="column" gap="20px">
+      <Typography variant="h4">Lesson View and Edit page</Typography>
+      <Paper
+        elevation={0}
+        sx={{ padding: 2, borderRadius: 4, backgroundColor: "#F4F4F8" }}
+      >
+        <Typography variant="h5">{lessonDetails?.title}</Typography>
+        <Card sx={{ padding: "20px" }}>
+          <Typography variant="h6">
+            Course name: {lessonDetails?.module.course.title}
+          </Typography>
+          <Typography variant="h6">
+            Module name: {lessonDetails?.module.title}
+          </Typography>
+          <Typography variant="body1">{lessonDetails?.content}</Typography>
+        </Card>
       </Paper>
+      <TestGenerator />
       <LessonFileUploader lessonId={Number(lessonId)} />
-    </>
+    </Box>
   );
 };
 

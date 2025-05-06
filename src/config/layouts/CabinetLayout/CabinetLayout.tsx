@@ -13,14 +13,7 @@ const CabinetLayout: FC<CabinetLayoutProps> = ({ children }) => {
       {/*<Sidebar />*/}
       <Header />
       <Box component="main" marginLeft={sidebarHiddenStateWidth} marginY={10}>
-        <Container
-          maxWidth="lg"
-          sx={{
-            border: "1px solid white",
-          }}
-        >
-          {children}
-        </Container>
+        <Container maxWidth="lg">{children}</Container>
       </Box>
     </>
   );

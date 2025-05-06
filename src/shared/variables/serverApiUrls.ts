@@ -12,9 +12,11 @@ export const createModuleServerApiUrl = `${userServerApiBaseUrl}/createModule`;
 export const createLessonServerApiUrl = `${userServerApiBaseUrl}/createLesson`;
 export const getLessonDetailsServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonDetails`;
 export const getLessonFilesServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonFiles`;
+export const getLessonTestServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonTest`;
 export const deleteLessonFileServerApiBaseUrl = `${userServerApiBaseUrl}/deleteLessonFile`;
 export const getLessonFileUploadUrlServerApiUrl = `${userServerApiBaseUrl}/getLessonFileUploadUrl`;
 export const saveLessonFileServerApiUrl = `${userServerApiBaseUrl}/saveLessonFile`;
+export const generateLessonTestServerApiUrl = `${userServerApiBaseUrl}/generateLessonTest`;
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;
