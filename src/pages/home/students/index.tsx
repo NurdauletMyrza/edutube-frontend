@@ -15,25 +15,25 @@ const mockStudentFeatures = [
     title: "Learn at Your Own Pace",
     description:
       "Access course materials anytime and anywhere. Rewatch lessons and review notes at your convenience.",
-    image: "/images/student-flexibility.png",
+    image: "/students1.png",
   },
   {
     title: "Instant Quizzes",
     description:
       "Test your understanding immediately with AI-generated quizzes after each lesson.",
-    image: "/images/student-quiz.png",
+    image: "/students2.png",
   },
   {
     title: "Track Your Progress",
     description:
       "Stay motivated by tracking your progress across modules and courses.",
-    image: "/images/student-progress.png",
+    image: "/students3.png",
   },
   {
     title: "All Resources in One Place",
     description:
       "Access all lesson videos, PDFs, and links in a centralized dashboard.",
-    image: "/images/student-resources.png",
+    image: "/students4.png",
   },
 ];
 

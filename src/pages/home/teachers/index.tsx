@@ -15,23 +15,23 @@ const mockTeacherFeatures = [
     title: "Easy Course Creation",
     description:
       "Create and manage courses with a simple and intuitive interface.",
-    image: "/images/teacher-course.png",
+    image: "/teachers1.png",
   },
   {
     title: "Automatic Quiz Generation",
     description: "Generate quizzes from your lesson materials using AI.",
-    image: "/images/teacher-quiz.png",
+    image: "/teachers3.png",
   },
   {
     title: "Lesson Insights",
     description: "Track student progress and get detailed lesson analytics.",
-    image: "/images/teacher-analytics.png",
+    image: "/onlineLearning.jpg",
   },
   {
     title: "Centralized File Storage",
     description:
       "Upload and manage your lesson videos and documents in one place.",
-    image: "/images/teacher-storage.png",
+    image: "/teachers2.png",
   },
 ];
 
