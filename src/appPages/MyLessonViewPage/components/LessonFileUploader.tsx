@@ -88,7 +88,7 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
 
   useEffect(() => {
     fetchLessonFiles();
-  }, [file]);
+  }, [file, lessonId]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
