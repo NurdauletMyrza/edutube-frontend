@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getTestStatusApiBaseUrl } from "@/shared/variables/backendApiUrls";
+import { getLessonTestStatusApiBaseUrl } from "@/shared/variables/backendApiUrls";
 import { accessTokenCookieName } from "@/shared/variables/variables";
 
 export default async function handler(
@@ -12,7 +12,7 @@ export default async function handler(
   }
 
   try {
-    const { testId } = req.query;
+    const { lessonId } = req.query;
 
     const accessToken = req.cookies[accessTokenCookieName];
 
@@ -20,11 +20,14 @@ export default async function handler(
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const response = await fetch(`${getTestStatusApiBaseUrl}${testId}/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await fetch(
+      `${getLessonTestStatusApiBaseUrl}${lessonId}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     const data = await response.json();
 

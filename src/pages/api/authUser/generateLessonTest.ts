@@ -18,9 +18,8 @@ export default async function handler(
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    console.log(req.body);
     const { lessonId } = req.body;
-    const response = await fetch(generateLessonTestApiUrl, {
+    fetch(generateLessonTestApiUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -29,13 +28,7 @@ export default async function handler(
       body: JSON.stringify({ lessonId }),
     });
 
-    const data = await response.json();
-
-    return res
-      .status(response.status)
-      .json(
-        response.ok ? data : { message: "Failed to generate test", ...data }
-      );
+    return res.status(200).json({ success: "Generate command running" });
   } catch (error) {
     return res.status(500).json({ message: `Internal Server Error: ${error}` });
   }

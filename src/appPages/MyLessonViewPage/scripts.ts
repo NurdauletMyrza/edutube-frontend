@@ -4,7 +4,7 @@ import {
   generateLessonTestServerApiUrl,
   getLessonFileUploadUrlServerApiUrl,
   getLessonTestServerApiBaseUrl,
-  getTestStatusServerApiBaseUrl,
+  getLessonTestStatusServerApiBaseUrl,
   saveLessonFileServerApiUrl,
 } from "@/shared/variables/serverApiUrls";
 
@@ -93,10 +93,10 @@ export async function getLessonTest(lessonId: number) {
   }
 }
 
-export async function getTestStatus(testId: number) {
+export async function getLessonTestStatus(lessonId: number) {
   try {
     const response = await fetchApiClient(
-      `${getTestStatusServerApiBaseUrl}/${testId}`
+      `${getLessonTestStatusServerApiBaseUrl}/${lessonId}`
     );
 
     const data = await response.json();
