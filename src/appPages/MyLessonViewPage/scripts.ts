@@ -4,6 +4,7 @@ import {
   generateLessonTestServerApiUrl,
   getLessonFileUploadUrlServerApiUrl,
   getLessonTestServerApiBaseUrl,
+  getTestStatusServerApiBaseUrl,
   saveLessonFileServerApiUrl,
 } from "@/shared/variables/serverApiUrls";
 
@@ -83,6 +84,19 @@ export async function getLessonTest(lessonId: number) {
   try {
     const response = await fetchApiClient(
       `${getLessonTestServerApiBaseUrl}/${lessonId}`
+    );
+
+    const data = await response.json();
+    return { ok: response.ok, ...data };
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function getTestStatus(testId: number) {
+  try {
+    const response = await fetchApiClient(
+      `${getTestStatusServerApiBaseUrl}/${testId}`
     );
 
     const data = await response.json();

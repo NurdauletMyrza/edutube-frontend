@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { userDetailsApiUrl } from "@/shared/variables/backendApiUrls";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getTestStatusApiBaseUrl } from "@/shared/variables/backendApiUrls";
 import { accessTokenCookieName } from "@/shared/variables/variables";
 
 export default async function handler(
@@ -12,28 +12,27 @@ export default async function handler(
   }
 
   try {
-    // Получаем access_token из http-only cookies
+    const { testId } = req.query;
+
     const accessToken = req.cookies[accessTokenCookieName];
 
     if (!accessToken) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    // Делаем запрос на Django API `/users/authUser/details/`
-    const response = await fetch(userDetailsApiUrl, {
+    const response = await fetch(`${getTestStatusApiBaseUrl}${testId}/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    if (!response.ok) {
-      return res
-        .status(response.status)
-        .json({ message: "Failed to fetch authUser" });
-    }
+    const data = await response.json();
 
-    const user = await response.json();
-    return res.status(200).json(user);
+    return res
+      .status(response.status)
+      .json(
+        response.ok ? data : { message: "Failed to get lesson files", ...data }
+      );
   } catch (error) {
     return res.status(500).json({ message: `Internal Server Error: ${error}` });
   }

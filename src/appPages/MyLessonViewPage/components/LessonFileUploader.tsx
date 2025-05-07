@@ -90,8 +90,6 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
     fetchLessonFiles();
   }, [file]);
 
-  console.log(lessonFiles);
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
@@ -120,8 +118,6 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
       }
 
       const { upload_url, fileId } = uploadUrlResponse.uploadUrlData;
-
-      console.log(uploadUrlResponse);
 
       // 2. Загружаем файл на Google Drive
       await fetch(upload_url, {
@@ -173,37 +169,41 @@ const LessonFileUploader = ({ lessonId }: { lessonId: number }) => {
         borderRadius: 4,
       }}
     >
-      <Typography variant="h6">File Manager</Typography>
+      {lessonFiles.length > 0 && (
+        <>
+          <Typography variant="h6">File Manager</Typography>
 
-      <Grid container spacing={3}>
-        {lessonFiles.map((file) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={file.id}>
-            <Card
-              variant="outlined"
-              sx={{ height: "100%", position: "relative" }}
-            >
-              <CardHeader
-                avatar={<FilePresentIcon color="primary" />}
-                title={file.filename}
-                subheader={`Uploaded ${new Date(file.uploaded_at)} ago`}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  <strong>File ID:</strong> {file.file_id}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <strong>Lesson ID:</strong> {file.lesson}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton onClick={() => handleDeleteFile(file.id)}>
-                  <DeleteRounded />
-                </IconButton>
-              </CardActions>
-            </Card>
+          <Grid container spacing={3}>
+            {lessonFiles.map((file) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={file.id}>
+                <Card
+                  variant="outlined"
+                  sx={{ height: "100%", position: "relative" }}
+                >
+                  <CardHeader
+                    avatar={<FilePresentIcon color="primary" />}
+                    title={file.filename}
+                    subheader={`Uploaded ${new Date(file.uploaded_at)} ago`}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      <strong>File ID:</strong> {file.file_id}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      <strong>Lesson ID:</strong> {file.lesson}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <IconButton onClick={() => handleDeleteFile(file.id)}>
+                      <DeleteRounded />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
 
       <Typography variant="h6">File Uploader</Typography>
 

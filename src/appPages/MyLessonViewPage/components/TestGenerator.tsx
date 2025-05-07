@@ -6,6 +6,7 @@ import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvide
 import {
   generateTestForLesson,
   getLessonTest,
+  getTestStatus,
 } from "@/appPages/MyLessonViewPage/scripts";
 import LessonTest from "@/appPages/MyLessonViewPage/components/LessonTest";
 import { Test } from "@/shared/utils/types";
@@ -13,66 +14,110 @@ import { Test } from "@/shared/utils/types";
 const TestGenerator: FC = () => {
   const { query } = useRouter();
   const { lessonId } = query;
-  const { isLoading, setLoading } = useLoading();
-  const [lessonTest, setLessonTest] = useState<Test | null>();
+  const { setLoading } = useLoading();
   const { showSnackbar } = useSnackbar();
 
-  function handleGenerateTest() {
+  const [lessonTest, setLessonTest] = useState<Test | null>(null);
+  const [testId, setTestId] = useState<number | null>(null);
+  const [isGeneratingTest, setIsGeneratingTest] = useState(false);
+
+  // Load testId from localStorage on mount
+  useEffect(() => {
+    const savedTestId = localStorage.getItem("generatingTestId");
+    if (savedTestId) {
+      setTestId(Number(savedTestId));
+      setIsGeneratingTest(true);
+    }
+  }, []);
+
+  // Save testId to localStorage when it changes
+  useEffect(() => {
+    if (testId) {
+      localStorage.setItem("generatingTestId", String(testId));
+      pollTestStatus(); // Start polling
+    }
+  }, [testId]);
+
+  const clearTestId = () => {
+    localStorage.removeItem("generatingTestId");
+    setTestId(null);
+    setIsGeneratingTest(false);
+  };
+
+  const handleGenerateTest = async () => {
     setLoading(true);
 
-    generateTestForLesson(Number(lessonId))
-      .then((data) => {
-        if (data.ok) {
-          showSnackbar(data["success"] ?? "Successfully generated.", "success");
-          fetchLessonTest();
-        } else {
-          showSnackbar(
-            data["error"] ??
-              data["detail"] ??
-              data["message"] ??
-              "Error test generation",
-            "error"
-          );
-        }
-      })
-      .catch((error) => {
-        showSnackbar(error, "error");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-
-  async function fetchLessonTest() {
-    if (!!lessonId) {
-      setLoading(true);
-
-      getLessonTest(Number(lessonId))
-        .then((data) => {
-          if (data.ok) {
-            setLessonTest(data.lessonTest);
-          } else {
-            showSnackbar(
-              data["error"] ??
-                data["detail"] ??
-                data["message"] ??
-                "Failed to get lesson test",
-              "error"
-            );
-          }
-        })
-        .catch((error) => {
-          showSnackbar(error, "error");
-        })
-        .finally(() => setLoading(false));
+    try {
+      const data = await generateTestForLesson(Number(lessonId));
+      if (data.test_id) {
+        setTestId(data.test_id);
+        setIsGeneratingTest(true);
+        showSnackbar("Test generation started.", "info");
+      } else {
+        showSnackbar(
+          data.error || data.message || "Generation failed",
+          "error"
+        );
+      }
+    } catch (error) {
+      showSnackbar(String(error), "error");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  const pollTestStatus = async () => {
+    if (!testId) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const data = await getTestStatus(testId);
+        if (data.ok && !data.is_generating) {
+          clearInterval(interval);
+          clearTestId();
+          fetchLessonTest(); // Refresh full test
+          showSnackbar("Test generation completed.", "success");
+        }
+      } catch (error) {
+        console.error("Polling failed:", error);
+        clearInterval(interval);
+        clearTestId();
+        showSnackbar("Failed to check test status.", "error");
+      }
+    }, 10000);
+  };
+
+  const fetchLessonTest = async () => {
+    if (!lessonId) return;
+
+    setLoading(true);
+    try {
+      const data = await getLessonTest(Number(lessonId));
+      console.log(lessonId, data);
+      if (data.ok) {
+        setLessonTest(data.lessonTest);
+
+        // Если вернулся активный is_generating и testId ещё не восстановлен
+        if (data.lessonTest?.is_generating && !testId) {
+          setTestId(data.lessonTest.id);
+          setIsGeneratingTest(true);
+        }
+      } else {
+        showSnackbar(
+          data.error || data.message || "Failed to fetch test",
+          "error"
+        );
+      }
+    } catch (error) {
+      showSnackbar(String(error), "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchLessonTest();
-  }, [lessonId]);
-
-  console.log(lessonTest);
+  }, [lessonId, testId]);
 
   return (
     <Paper
@@ -82,11 +127,13 @@ const TestGenerator: FC = () => {
       <Typography variant="h6">Test Generator</Typography>
       <Button
         variant="contained"
-        disabled={isLoading}
+        disabled={isGeneratingTest}
         onClick={handleGenerateTest}
+        sx={{ mt: 2, mb: 2 }}
       >
-        {isLoading ? "Loading..." : "Generate Test"}
+        {isGeneratingTest ? "Generating..." : "Generate Test"}
       </Button>
+
       {!!lessonTest && lessonTest.questions.length > 0 && (
         <LessonTest lessonTest={lessonTest} />
       )}

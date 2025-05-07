@@ -51,8 +51,6 @@ const MyLessonViewPage = () => {
     fetchLessonDetails();
   }, [lessonId, user]);
 
-  console.log(lessonDetails, user);
-
   return (
     <Box display="flex" flexDirection="column" gap="20px">
       <Typography variant="h4">Lesson View and Edit page</Typography>

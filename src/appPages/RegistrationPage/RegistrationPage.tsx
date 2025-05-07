@@ -34,7 +34,6 @@ const RegistrationPage = () => {
 
     const data = await response.json();
     setLoading(false);
-    console.log(data);
 
     if (!response.ok) {
       setError(data.email || data.password || "Ошибка регистрации.");

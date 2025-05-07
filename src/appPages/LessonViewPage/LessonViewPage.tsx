@@ -73,7 +73,7 @@ const LessonViewPage = () => {
     fetchLessonDetails();
   }, [lessonId, user]);
 
-  console.log(lessonDetails, lessonFiles);
+  console.log(lessonDetails);
 
   return (
     <>

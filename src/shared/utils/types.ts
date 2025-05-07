@@ -81,5 +81,6 @@ export type Test = {
   id: number;
   lesson: number;
   created_at: string;
+  is_generating: boolean;
   questions: Question[];
 };
