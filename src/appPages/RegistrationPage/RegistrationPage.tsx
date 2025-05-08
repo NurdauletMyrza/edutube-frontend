@@ -38,7 +38,7 @@ const RegistrationPage = () => {
     if (!response.ok) {
       setError(data.email || data.password || "Ошибка регистрации.");
     } else {
-      setSuccess("Регистрация успешна! Проверьте почту для активации.");
+      setSuccess("Registration successful! Check your email for activation.");
       setFormData({
         email: "",
         password: "",

@@ -8,6 +8,7 @@ export const aboutMeServerApiUrl = `${userServerApiBaseUrl}/details`;
 export const deleteCurrentUserServerApiUrl = `${userServerApiBaseUrl}/deleteUser`;
 export const createCourseServerApiUrl = `${userServerApiBaseUrl}/createCourse`;
 export const getCreatedCoursesServerApiUrl = `${userServerApiBaseUrl}/getCreatedCourses`;
+export const getEnrolledCoursesServerApiUrl = `${userServerApiBaseUrl}/getEnrolledCourses`;
 export const createModuleServerApiUrl = `${userServerApiBaseUrl}/createModule`;
 export const createLessonServerApiUrl = `${userServerApiBaseUrl}/createLesson`;
 export const getLessonDetailsServerApiBaseUrl = `${userServerApiBaseUrl}/getLessonDetails`;
@@ -18,6 +19,8 @@ export const deleteLessonFileServerApiBaseUrl = `${userServerApiBaseUrl}/deleteL
 export const getLessonFileUploadUrlServerApiUrl = `${userServerApiBaseUrl}/getLessonFileUploadUrl`;
 export const saveLessonFileServerApiUrl = `${userServerApiBaseUrl}/saveLessonFile`;
 export const generateLessonTestServerApiUrl = `${userServerApiBaseUrl}/generateLessonTest`;
+export const enrollInCourseServerApiUrl = `${userServerApiBaseUrl}/enrollInCourse`;
+export const isEnrolledCourseServerApiUrl = `${userServerApiBaseUrl}/isEnrolledCourse`;
 
 export const coursesServerApiUrl = `${serverApiBaseUrl}/courses`;
 export const getAllCoursesServerApiUrl = `${coursesServerApiUrl}/getAllCourses`;

@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 import { createCoursePagePath } from "@/shared/variables/pagePaths";
 import { useEffect, useState } from "react";
 import { useLoading } from "@/config/providers/LoadingProvider/LoadingProvider";
-import { getMyCourses } from "@/appPages/CabinetMyCoursesPage/scripts";
+import {
+  getEnrolledCourses,
+  getMyCourses,
+} from "@/appPages/CabinetMyCoursesPage/scripts";
 import { useSnackbar } from "@/config/providers/SnackbarProvider/SnackbarProvider";
 import { Course } from "@/shared/utils/types";
 import CoursesHolderAccordion from "@/shared/components/CoursesHolderAccordion";
@@ -14,6 +17,7 @@ const CabinetMyCoursesPage = () => {
   const { setLoading } = useLoading();
   const { showSnackbar } = useSnackbar();
   const [myCourses, setMyCourses] = useState<Course[]>([]);
+  const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,6 +26,29 @@ const CabinetMyCoursesPage = () => {
       .then((data) => {
         if (data.ok) {
           setMyCourses(data.courses);
+        } else {
+          showSnackbar(
+            data["error"] ??
+              data["detail"] ??
+              data["message"] ??
+              "Failed to get courses",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        showSnackbar(error, "error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    setLoading(true);
+
+    getEnrolledCourses()
+      .then((data) => {
+        if (data.ok) {
+          setEnrolledCourses(data.courses);
         } else {
           showSnackbar(
             data["error"] ??
@@ -52,9 +79,14 @@ const CabinetMyCoursesPage = () => {
           Create course
         </Button>
       </Box>
-      <CoursesHolderAccordion courses={myCourses} accordionTitle="Active" />
-      <CoursesHolderAccordion courses={myCourses} accordionTitle="Drafts" />
-      <CoursesHolderAccordion courses={myCourses} accordionTitle="Checking" />
+      <CoursesHolderAccordion
+        courses={myCourses}
+        accordionTitle="Created courses"
+      />
+      <CoursesHolderAccordion
+        courses={enrolledCourses}
+        accordionTitle="Enrolled courses"
+      />
     </Box>
   );
 };
